@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useEffect, useState} from 'react';
 import './App.css';
+import {createBrowserRouter, Outlet, RouterProvider} from "react-router-dom";
+import {ChakraProvider, defaultSystem, Spinner} from "@chakra-ui/react";
+import {MainPage} from "./pages/MainPage";
+import {Header} from "./components/Header";
+import {Footer} from "./components/Footer";
+import {SignInPage} from "./pages/SignInPage";
+import {SignUpPage} from "./pages/SignUpPage";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+  const router = createBrowserRouter([
+    {path: "/", element: <MainPage />},
+    {path: "/SignIn", element: <SignInPage />},
+    {path: "/SignUp", element: <SignUpPage />},
+  ]);
+
+  return(
+      <ChakraProvider value={defaultSystem}>
+          {Header()}
+                <RouterProvider router={router} />
+          {Footer()}
+      </ChakraProvider>
+  )
 }
 
 export default App;
