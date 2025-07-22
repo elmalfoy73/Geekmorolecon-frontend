@@ -4,15 +4,21 @@ export function Footer() {
         <HStack
             maxW="5xl"
             w="100%"
-            p={8}
+            p={6}
             justifyContent="space-between"
             alignItems="center"
             direction={{ base: 'column', md: 'row' }}
         >
             {/* Левая часть с изображениями */}
             <HStack>
+                <Link href="https://vk.com/geekmorolecon?from=groups">
+                    <Image h="50px" src="VK.png"/>
+                </Link>
+                <Link href="https://t.me/GEEKMOROLECON">
+                    <Image h="50px" src="Telegram_logo.svg"/>
+                </Link>
                 <Link href="https://vk.com/geekmo?from=groups">
-                    <Image w="100px" src="GEEKMO_Logo.png" alt="TemplatesKart"/>
+                    <Image h="50px" src="GEEKMO_Logo.png"/>
                 </Link>
                 <a aria-current="page" href="/" className="router-link-active router-link-exact-active">
                     <svg xmlns="http://www.w3.org/2000/svg" width="196" height="24" fill="none">

@@ -5,7 +5,7 @@ import {Heading, Box, Image} from "@chakra-ui/react";
 export function MainPage() {
 
     return (
-        <Box mt={4} px={6} className="page">
+        <Box px={6} className="page">
             <div>
                 <Image src='main.png'></Image>
                 <Heading size="6xl">22-23 ноября | ул. Ломоносова, 9</Heading>

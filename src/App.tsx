@@ -7,13 +7,15 @@ import {Header} from "./components/Header";
 import {Footer} from "./components/Footer";
 import {SignInPage} from "./pages/SignInPage";
 import {SignUpPage} from "./pages/SignUpPage";
+import {GamesPage} from "./pages/GamesPage";
 
 function App() {
 
   const router = createBrowserRouter([
     {path: "/", element: <MainPage />},
-    {path: "/SignIn", element: <SignInPage />},
-    {path: "/SignUp", element: <SignUpPage />},
+    {path: "/signIn", element: <SignInPage />},
+    {path: "/signUp", element: <SignUpPage />},
+    {path: "/games", element: <GamesPage />},
   ]);
 
   return(

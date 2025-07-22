@@ -9,7 +9,7 @@ export class ErrorResponse {
 export class BaseController {
 
     async api<T>(url: string, body: any = null, method: string = "GET"): Promise<T | ErrorResponse> {
-        let response = await this.request("http://localhost:5000/api/" + url, body, method)
+        let response = await this.request("http://127.0.0.1:5000/api/" + url, body, method)
         let text = await response.text();
         if (text == ""){
             text = "{}"
