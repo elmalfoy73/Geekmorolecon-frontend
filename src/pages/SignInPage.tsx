@@ -35,7 +35,8 @@ export function SignInPage() {
         <Box pt={4} pb={4} px={6}
              bgImage="url('/bg.png')"
              bgSize="cover"
-             bgRepeat="no-repeat">
+             bgRepeat="no-repeat"
+             bgAttachment="fixed">
 
             <Card.Root maxW="sm">
                 <Card.Header>
