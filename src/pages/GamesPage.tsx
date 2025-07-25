@@ -3,8 +3,9 @@ import React, {useEffect, useState} from "react";
 import {ErrorResponse} from "../controllers/BaseController";
 import {Badge, Box, Button, Card, For, Heading, List, ListItem, Stack} from "@chakra-ui/react";
 import {Game} from "../model/Game";
+import {User} from "../model/user/User";
 
-export function GamesPage() {
+export function GamesPage(props: { currentUser: User | undefined; setCurrentUser: (newPersonData: User) => void; }) {
     const [error, setError] = useState(false);
     const [games, setGames] = useState<Game[]>([]);
 
@@ -39,7 +40,7 @@ export function GamesPage() {
                     <div>
                         <Stack gap="4" direction="row" wrap="wrap">
                             {games.map((game) => (
-                                    <Card.Root width="320px"key={game.name}>
+                                    <Card.Root width="400px" key={game.name}>
                                         <Card.Body gap="2">
                                             <Card.Title mb="2">{game.name}</Card.Title>
                                             <Card.Description>

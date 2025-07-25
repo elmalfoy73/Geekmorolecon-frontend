@@ -6,4 +6,14 @@ export class GamesController extends BaseController {
         let url = "games";
         return await this.api<Game[]>(url)
     }
+
+    async getGameByName(gameName: string) {
+        let url = "games/"+gameName;
+        return await this.api<Game[]>(url)
+    }
+
+    async joinGame(name: string) {
+        let url = "entryToSection";
+        return await this.api<any>(url, {name}, "POST")
+    }
 }

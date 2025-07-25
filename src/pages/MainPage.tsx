@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from "react";
 import {Heading, Box, Image} from "@chakra-ui/react";
+import {User} from "../model/user/User";
 
 
-export function MainPage() {
+export function MainPage(props: { currentUser: User | undefined; setCurrentUser: (newPersonData: User) => void; }) {
 
     return (
         <Box px={6} className="page">

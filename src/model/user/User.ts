@@ -1,11 +1,19 @@
 export class User {
-    userId: string
-    login: string
+    contact: string
+    email: string
+    image: string
+    isAdmin: boolean
     name: string
+    password: string
+    sections: string[]
 
-    constructor(userId: string, login: string, name: string = "") {
-        this.userId = userId
-        this.login = login
+    constructor(contact: string, email: string, image: string, isAdmin: boolean, name: string, password: string, sections: string[]) {
+        this.contact = contact
+        this.email = email
+        this.image = image
+        this.isAdmin = isAdmin
         this.name = name
+        this.password = password
+        this.sections = sections
     }
 }

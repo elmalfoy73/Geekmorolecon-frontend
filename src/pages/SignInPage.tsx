@@ -5,12 +5,15 @@ import {AuthController} from "../controllers/AuthController";
 import {ErrorResponse} from "../controllers/BaseController";
 import {SignInRequest} from "../model/user/auth/SignInRequest";
 import {UserController} from "../controllers/UserController";
+import {User} from "../model/user/User";
+import {useNavigate} from "react-router-dom";
 
 
-export function SignInPage() {
+export function SignInPage(props: { currentUser: User | undefined; setCurrentUser: (newPersonData: User) => void; }) {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     let [error, setError] = useState<string | null>(null);
+    let navigate = useNavigate()
 
     async function handleForm() {
 
@@ -27,7 +30,15 @@ export function SignInPage() {
                 setError("Неверный пароль");
             }
             setError(null);
-            let responseNew = await new UserController().getCurrentUser();
+            localStorage.setItem("token", response.token)
+            let user = await new UserController().getCurrentUser();
+            if (user instanceof ErrorResponse) {
+                setError("");
+            } else {
+                props.setCurrentUser(user.user);
+                console.log(props.currentUser?.name);
+                navigate("/")
+            }
         }
     }
 
@@ -38,7 +49,7 @@ export function SignInPage() {
              bgRepeat="no-repeat"
              bgAttachment="fixed">
 
-            <Card.Root maxW="sm">
+            <Card.Root maxW="md">
                 <Card.Header>
                     <Card.Title>Sign In</Card.Title>
                 </Card.Header>

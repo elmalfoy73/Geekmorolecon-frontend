@@ -22,8 +22,9 @@ export class BaseController {
         let headers: Headers = new Headers({
             'Content-Type': 'application/json'
         });
-        if (localStorage["token"] != null) {
-            headers.append("Authorization", "Bearer " + localStorage["token"])
+        const token = localStorage.getItem("token")
+        if (token != null) {
+            headers.append("Authorization", "Bearer " + token)
         }
         const options: RequestInit = {
             headers: headers,

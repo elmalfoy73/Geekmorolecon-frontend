@@ -1,4 +1,5 @@
 export interface SignInResponse {
     "exists": boolean,
-    "passMatch": boolean
+    "passMatch": boolean,
+    "token": string
 }

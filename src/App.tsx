@@ -8,23 +8,47 @@ import {Footer} from "./components/Footer";
 import {SignInPage} from "./pages/SignInPage";
 import {SignUpPage} from "./pages/SignUpPage";
 import {GamesPage} from "./pages/GamesPage";
+import {receiveAndUpdateCurrentUser} from "./utils/auth/ReceiveAndUpdateCurrentUser";
+import {User} from "./model/user/User";
+import {AccountPage} from "./pages/AccountPage";
 
 function App() {
 
-  const router = createBrowserRouter([
-    {path: "/", element: <MainPage />},
-    {path: "/signIn", element: <SignInPage />},
-    {path: "/signUp", element: <SignUpPage />},
-    {path: "/games", element: <GamesPage />},
-  ]);
+    let [loading, setLoading] = useState(true)
+    let [currentUser, setCurrentUser] = useState<User>()
+    useEffect(() => receiveAndUpdateCurrentUser(
+        (user) => setCurrentUser(user),
+        () => setLoading(false),
+    ), []);
 
-  return(
-      <ChakraProvider value={defaultSystem}>
-          {Header()}
-                <RouterProvider router={router} />
-          {Footer()}
-      </ChakraProvider>
-  )
+    const router = createBrowserRouter([
+        {
+            path: "/",
+            element: <Root currentUser={currentUser}/>,
+            children: [
+                {index: true, element: <MainPage currentUser={currentUser} setCurrentUser={setCurrentUser}/>},
+                {path: "/signIn", element: <SignInPage currentUser={currentUser} setCurrentUser={setCurrentUser}/>},
+                {path: "/signUp", element: <SignUpPage currentUser={currentUser} setCurrentUser={setCurrentUser}/>},
+                {path: "/games", element: <GamesPage currentUser={currentUser} setCurrentUser={setCurrentUser}/>},
+                {path: "/account", element: <AccountPage currentUser={currentUser} setCurrentUser={setCurrentUser}/>,},
+
+            ]
+        },
+    ]);
+
+    return <RouterProvider router={router}/>
+}
+
+function Root(props: { currentUser: User | undefined }) {
+    return (
+        <ChakraProvider value={defaultSystem}>
+            {Header({currentUser: props.currentUser})}
+            <main>
+                <Outlet/>
+            </main>
+            {Footer()}
+        </ChakraProvider>
+    )
 }
 
 export default App;

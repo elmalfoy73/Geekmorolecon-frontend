@@ -5,16 +5,17 @@ import {SignUpRequest} from "../model/user/auth/SignUpRequest";
 import {AuthController} from "../controllers/AuthController";
 import {ErrorResponse} from "../controllers/BaseController";
 import {UserController} from "../controllers/UserController";
+import {User} from "../model/user/User";
+import {useNavigate} from "react-router-dom";
 
 
-export function SignUpPage() {
+export function SignUpPage(props: { currentUser: User | undefined; setCurrentUser: (newPersonData: User) => void; }) {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
     const [name, setName] = useState("")
     const [contact, setContact] = useState("")
-
-
+    let navigate = useNavigate()
     let [error, setError] = useState<string | null>(null);
     let [passwordMismatch, setPasswordMismatch] = useState(false);
 
@@ -33,10 +34,18 @@ export function SignUpPage() {
         if (response instanceof ErrorResponse) {
             console.log(response.text);
         } else {
-            if (response == true) {
+            if (response.exists == true) {
                 setError("Пользователь с таким email уже существует!");
             }
-            //console.log(response.userId)
+            localStorage.setItem("token", response.token)
+            let user = await new UserController().getCurrentUser();
+            if (user instanceof ErrorResponse) {
+                setError("");
+            } else {
+                props.setCurrentUser(user.user);
+                console.log(props.currentUser?.name);
+                navigate("/")
+            }
         }
     }
 
@@ -48,7 +57,7 @@ export function SignUpPage() {
              bgRepeat="no-repeat"
              bgAttachment="fixed">
 
-            <Card.Root maxW="sm">
+            <Card.Root maxW="md">
                 <Card.Header>
                     <Card.Title>Sign up</Card.Title>
                     <Card.Description>
