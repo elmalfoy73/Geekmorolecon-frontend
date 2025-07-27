@@ -8,7 +8,7 @@ import {
     Input,
     InputGroup,
     Editable,
-    IconButton
+    IconButton, Image, Card, HStack, Badge, Popover, Portal, Center, AbsoluteCenter
 } from "@chakra-ui/react";
 import {User} from "../model/user/User";
 import {UserController} from "../controllers/UserController";
@@ -18,7 +18,10 @@ import {AuthController} from "../controllers/AuthController";
 import {useNavigate} from "react-router-dom";
 
 
-export function AccountPage(props: { currentUser: User | undefined; setCurrentUser: (newPersonData: undefined) => void; }) {
+export function AccountPage(props: {
+    currentUser: User | undefined;
+    setCurrentUser: (newPersonData: undefined) => void;
+}) {
     const [error, setError] = useState(false);
     const [newName, setNewName] = useState<string>();
     const [prevPassword, setPrevPassword] = useState<string>();
@@ -35,17 +38,51 @@ export function AccountPage(props: { currentUser: User | undefined; setCurrentUs
     }
 
     return (
-
         <Box pt={4} pb={4} px={6}
              bgImage="url('/bg.png')"
              bgSize="cover"
              bgRepeat="no-repeat"
-             bgAttachment="fixed">
-            <div className="page-box">
-                <Heading>{props.currentUser?.name}</Heading>
-                <Heading>{props.currentUser?.email}</Heading>
-                <Button onClick={signOut} mt={4}>Выйти</Button>
-            </div>
+             bgAttachment="fixed"
+             position="relative">
+            <Center>
+                <Box>
+                    <Image h="200px" src="dragon.png"/>
+                    <Popover.Root>
+                        <Popover.Trigger asChild>
+                            <Heading color="white">{props.currentUser?.name} ✏️</Heading>
+                        </Popover.Trigger>
+                        <Portal>
+                            <Popover.Positioner>
+                                <Popover.Content>
+                                    <Popover.Arrow/>
+                                    <Popover.Body>
+                                        <Popover.Title fontWeight="medium">Новое имя</Popover.Title>
+                                        <Input placeholder={props.currentUser?.name} size="sm"/>
+                                    </Popover.Body>
+                                </Popover.Content>
+                            </Popover.Positioner>
+                        </Portal>
+                    </Popover.Root>
+
+                    <Popover.Root>
+                        <Popover.Trigger asChild>
+                            <Heading color="white">{props.currentUser?.email} ✏️</Heading>
+                        </Popover.Trigger>
+                        <Portal>
+                            <Popover.Positioner>
+                                <Popover.Content>
+                                    <Popover.Arrow/>
+                                    <Popover.Body>
+                                        <Popover.Title fontWeight="medium">Новый email</Popover.Title>
+                                        <Input placeholder={props.currentUser?.email} size="sm"/>
+                                    </Popover.Body>
+                                </Popover.Content>
+                            </Popover.Positioner>
+                        </Portal>
+                    </Popover.Root>
+                    <Button onClick={signOut} mt={4}>Выйти</Button>
+                </Box>
+            </Center>
         </Box>
     );
 }
