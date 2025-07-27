@@ -42,8 +42,12 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
         }
     }
 
-    async function leaveGame() {
-
+    async function leaveGame(id : string) {
+            const response = await new GamesController().leaveGame(id)
+            if (response instanceof ErrorResponse) {
+                setError(true);
+            } else {
+            }
     }
 
 
@@ -78,7 +82,7 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
                         <Card.Footer justifyContent="flex-end">
                             {game.counter > 0 ? (
                                 props.currentUser?.sections?.includes(game.id) ? (
-                                    <Button onClick={() => leaveGame()}>Отменить запись</Button>
+                                    <Button onClick={() => leaveGame(game.id)}>Отменить запись</Button>
                                 ) : (
                                     <Button onClick={() => joinGame(game.id)}>Записаться на партию</Button>
                                 )

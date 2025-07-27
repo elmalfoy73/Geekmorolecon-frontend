@@ -16,4 +16,9 @@ export class GamesController extends BaseController {
         let url = "entryToSection";
         return await this.api<any>(url, {id}, "POST")
     }
+
+    async leaveGame(id: string) {
+        let url = "delete-entry/"+id;
+        return await this.api<any>(url, {},"POST")
+    }
 }
