@@ -1,7 +1,7 @@
 import {GamesController} from "../controllers/GamesController";
 import React, {useEffect, useState} from "react";
 import {ErrorResponse} from "../controllers/BaseController";
-import {Badge, Box, Button, Card, For, Heading, List, ListItem, Stack} from "@chakra-ui/react";
+import {Badge, Box, Button, Card, For, Heading, Image, List, ListItem, Stack} from "@chakra-ui/react";
 import {Game} from "../model/Game";
 import {User} from "../model/user/User";
 
@@ -23,6 +23,18 @@ export function GamesPage(props: { currentUser: User | undefined; setCurrentUser
         }
     }
 
+    async function joinGame(name: string) {
+        try {
+            const response = await new GamesController().joinGame(name)
+            if (response instanceof ErrorResponse) {
+                setError(true);
+            } else {
+            }
+        } catch (err) {
+            setError(true);
+        }
+    }
+
     useEffect(() => {
         fetchGamesData();
     }, []);
@@ -38,27 +50,23 @@ export function GamesPage(props: { currentUser: User | undefined; setCurrentUser
 
                 {games.length > 0 ? (
                     <div>
-                        <Stack gap="4" direction="row" wrap="wrap">
+                        <Stack gap="4" direction="row">
                             {games.map((game) => (
-                                    <Card.Root width="400px" key={game.name}>
+                                    <Card.Root maxW="sm" overflow="hidden">
                                         <Card.Body gap="2">
-                                            <Card.Title mb="2">{game.name}</Card.Title>
+                                            <Image h="200px" src={game.image}/>
+                                            <Card.Title mb="2">{game.system} «{game.name}»</Card.Title>
                                             <Card.Description>
+                                                <div>{game.master}, {game.masterClub}</div>
+                                                <div>Дата: {game.date}</div>
+                                                <div>Время: {game.time}</div>
                                                 <div>{game.description}</div>
-                                                <div>Мест: {game.counter}</div>
-                                                <div>Записаны: </div>
-                                                <List.Root px={4}>
-                                                    {game.users.map((user)=>(
-                                                        <List.Item>
-                                                            {user}
-                                                        </List.Item>))}
-                                                </List.Root>
-
+                                                <div>{game.counter} мест, свободно: {game.counter}</div>
                                             </Card.Description>
                                         </Card.Body>
                                         <Card.Footer justifyContent="flex-end">
                                             {game.counter > 0 ? (
-                                                <Button>Join</Button>
+                                                <Button onClick={() => joinGame(game.name)}>Join</Button>
                                                 ) : (
                                                 <Badge colorPalette="red" size="md">Мест нет</Badge>
                                             )}
