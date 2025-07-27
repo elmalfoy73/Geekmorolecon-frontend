@@ -11,6 +11,7 @@ import {GamesPage} from "./pages/GamesPage";
 import {receiveAndUpdateCurrentUser} from "./utils/auth/ReceiveAndUpdateCurrentUser";
 import {User} from "./model/user/User";
 import {AccountPage} from "./pages/AccountPage";
+import {GamePage} from "./pages/GamePage";
 
 function App() {
 
@@ -30,7 +31,8 @@ function App() {
                 {path: "/signIn", element: <SignInPage currentUser={currentUser} setCurrentUser={setCurrentUser}/>},
                 {path: "/signUp", element: <SignUpPage currentUser={currentUser} setCurrentUser={setCurrentUser}/>},
                 {path: "/games", element: <GamesPage currentUser={currentUser} setCurrentUser={setCurrentUser}/>},
-                {path: "/account", element: <AccountPage currentUser={currentUser} setCurrentUser={setCurrentUser}/>,},
+                {path: "/account", element: <AccountPage currentUser={currentUser} setCurrentUser={setCurrentUser}/>},
+                {path: "/game/:id", element: <GamePage currentUser={currentUser} setCurrentUser={setCurrentUser}/>,},
 
             ]
         },

@@ -7,13 +7,13 @@ export class GamesController extends BaseController {
         return await this.api<Game[]>(url)
     }
 
-    async getGameByName(gameName: string) {
-        let url = "games/"+gameName;
-        return await this.api<Game[]>(url)
+    async getGame(id: string) {
+        let url = "games/"+id;
+        return await this.api<Game>(url)
     }
 
-    async joinGame(name: string) {
+    async joinGame(id: string) {
         let url = "entryToSection";
-        return await this.api<any>(url, {name}, "POST")
+        return await this.api<any>(url, {id}, "POST")
     }
 }

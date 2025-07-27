@@ -4,10 +4,12 @@ import {ErrorResponse} from "../controllers/BaseController";
 import {Badge, Box, Button, Card, For, Heading, Image, List, ListItem, Stack} from "@chakra-ui/react";
 import {Game} from "../model/Game";
 import {User} from "../model/user/User";
+import {useNavigate} from "react-router-dom";
 
 export function GamesPage(props: { currentUser: User | undefined; setCurrentUser: (newPersonData: User) => void; }) {
     const [error, setError] = useState(false);
     const [games, setGames] = useState<Game[]>([]);
+    let navigate = useNavigate()
 
     async function fetchGamesData() {
         try {
@@ -18,18 +20,6 @@ export function GamesPage(props: { currentUser: User | undefined; setCurrentUser
                 setGames(response)
             }
 
-        } catch (err) {
-            setError(true);
-        }
-    }
-
-    async function joinGame(name: string) {
-        try {
-            const response = await new GamesController().joinGame(name)
-            if (response instanceof ErrorResponse) {
-                setError(true);
-            } else {
-            }
         } catch (err) {
             setError(true);
         }
@@ -52,7 +42,7 @@ export function GamesPage(props: { currentUser: User | undefined; setCurrentUser
                     <div>
                         <Stack gap="4" direction="row">
                             {games.map((game) => (
-                                    <Card.Root maxW="sm" overflow="hidden">
+                                    <Card.Root width="400px" overflow="hidden" onClick={() => navigate(`/game/${game.id}`)}>
                                         <Card.Body gap="2">
                                             <Image h="200px" src={game.image}/>
                                             <Card.Title mb="2">{game.system} «{game.name}»</Card.Title>
@@ -61,12 +51,12 @@ export function GamesPage(props: { currentUser: User | undefined; setCurrentUser
                                                 <div>Дата: {game.date}</div>
                                                 <div>Время: {game.time}</div>
                                                 <div>{game.description}</div>
-                                                <div>{game.counter} мест, свободно: {game.counter}</div>
+                                                <div>{game.places} мест, свободно: {game.counter}</div>
                                             </Card.Description>
                                         </Card.Body>
                                         <Card.Footer justifyContent="flex-end">
                                             {game.counter > 0 ? (
-                                                <Button onClick={() => joinGame(game.name)}>Join</Button>
+                                                <Badge colorPalette="green" size="md">Записаться</Badge>
                                                 ) : (
                                                 <Badge colorPalette="red" size="md">Мест нет</Badge>
                                             )}
