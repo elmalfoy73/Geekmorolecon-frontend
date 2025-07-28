@@ -44,7 +44,7 @@ export function GamesPage(props: { currentUser: User | undefined; setCurrentUser
                             {games.map((game) => (
                                     <Card.Root width="400px" overflow="hidden" onClick={() => navigate(`/game/${game.id}`)}>
                                         <Card.Body gap="2">
-                                            <Image h="200px" src={game.image}/>
+                                            <Image src={game.image}/>
                                             <Card.Title mb="2">{game.system} «{game.name}»</Card.Title>
                                             <Card.Description>
                                                 <div>{game.master}, {game.masterClub}</div>
