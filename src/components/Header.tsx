@@ -1,6 +1,6 @@
 import React from "react";
 import {NavLink} from "react-router-dom";
-import {Box, Button, ButtonGroup, Image, Stack} from "@chakra-ui/react";
+import {Badge, Box, Button, ButtonGroup, Image, Stack} from "@chakra-ui/react";
 import {User} from "../model/user/User";
 
 export function Header(props: { currentUser: User | undefined }) {
@@ -43,6 +43,9 @@ export function Header(props: { currentUser: User | undefined }) {
                         <Button asChild><a href="/games">Партии</a></Button>
                         <Button>Расписание</Button>
                         <Button colorPalette='orange' asChild><a href="/account">{props.currentUser?.name}</a></Button>
+                        {props.currentUser?.isAdmin && (
+                            <Button colorPalette='orange' asChild><a href="/account">Админка</a></Button>
+                        )}
                     </ButtonGroup>
                 </Box>
             </Stack>

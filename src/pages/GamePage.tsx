@@ -1,5 +1,5 @@
 import {User} from "../model/user/User";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {GamesController} from "../controllers/GamesController";
 import {ErrorResponse} from "../controllers/BaseController";
 import React, {useEffect, useState} from "react";
@@ -10,6 +10,7 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
     const {id} = useParams<{ id: string }>();
     const [error, setError] = useState(false);
     const [game, setGame] = useState<Game>();
+    let navigate = useNavigate()
 
     async function fetchGameData() {
         if (!id) return;
@@ -36,9 +37,11 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
             if (response instanceof ErrorResponse) {
                 setError(true);
             } else {
+                navigate(`/account`)
             }
         } catch (err) {
             setError(true);
+            console.error("Ошибка при записи", err);
         }
     }
 
@@ -48,6 +51,7 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
             if (response instanceof ErrorResponse) {
                 setError(true);
             } else {
+                navigate(`/account`)
             }
         } catch (err) {
             setError(true);
