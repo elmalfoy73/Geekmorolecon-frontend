@@ -1,5 +1,5 @@
 import {User} from "../model/user/User";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {GamesController} from "../controllers/GamesController";
 import {ErrorResponse} from "../controllers/BaseController";
 import React, {useEffect, useState} from "react";
@@ -10,6 +10,7 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
     const {id} = useParams<{ id: string }>();
     const [error, setError] = useState(false);
     const [game, setGame] = useState<Game>();
+    let navigate = useNavigate()
 
     async function fetchGameData() {
         if (!id) return;
@@ -36,18 +37,26 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
             if (response instanceof ErrorResponse) {
                 setError(true);
             } else {
+                navigate(`/account`)
             }
         } catch (err) {
             setError(true);
+            console.error("Ошибка при записи", err);
         }
     }
 
     async function leaveGame(id : string) {
+        try {
             const response = await new GamesController().leaveGame(id)
             if (response instanceof ErrorResponse) {
                 setError(true);
             } else {
+                navigate(`/account`)
             }
+        } catch (err) {
+            setError(true);
+            console.error("Ошибка при отписке", err);
+        }
     }
 
 
@@ -62,7 +71,7 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
                 <div>
                     <Card.Root maxW="xl" overflow="hidden">
                         <Card.Body gap="2">
-                            <Image h="200px" src={game.image}/>
+                            <Image src={game.image}/>
                             <Card.Title mb="2">{game.system} «{game.name}»</Card.Title>
                             <Card.Description>
                                 <div>{game.master}, {game.masterClub}</div>
@@ -81,11 +90,11 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
                         </Card.Body>
                         <Card.Footer justifyContent="flex-end">
                             {game.counter > 0 ? (
-                                props.currentUser?.sections?.includes(game.id) ? (
+                                props.currentUser ? (props.currentUser.sections.includes(game.id) ? (
                                     <Button onClick={() => leaveGame(game.id)}>Отменить запись</Button>
                                 ) : (
                                     <Button onClick={() => joinGame(game.id)}>Записаться на партию</Button>
-                                )
+                                )) : (<Badge size="md">Войдите в аккаунт для записи</Badge>)
                             ) : (
                                 <Badge colorPalette="red" size="md">Мест нет</Badge>
                             )}

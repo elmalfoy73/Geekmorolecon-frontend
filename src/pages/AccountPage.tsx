@@ -8,7 +8,7 @@ import {
     Input,
     InputGroup,
     Editable,
-    IconButton, Image, Card, HStack, Badge, Popover, Portal, Center, AbsoluteCenter
+    IconButton, Image, Card, HStack, Badge, Popover, Portal, Center, AbsoluteCenter, Stack, Field
 } from "@chakra-ui/react";
 import {User} from "../model/user/User";
 import {UserController} from "../controllers/UserController";
@@ -17,6 +17,10 @@ import {LuCheck, LuPencilLine, LuX} from "react-icons/lu";
 import {AuthController} from "../controllers/AuthController";
 import {useNavigate} from "react-router-dom";
 import {UpdateRequest} from "../model/user/UpdateRequest";
+import {GamesController} from "../controllers/GamesController";
+import {Game} from "../model/Game";
+import {PasswordInput} from "../components/ui/password-input";
+import {SignUpRequest} from "../model/user/auth/SignUpRequest";
 
 
 export function AccountPage(props: {
@@ -25,12 +29,12 @@ export function AccountPage(props: {
 }) {
     const [error, setError] = useState(false);
     const [newName, setNewName] = useState<string>();
-    const [prevPassword, setPrevPassword] = useState<string>();
-    const [newPassword, setNewPassword] = useState<string>();
-    const [newEmail, setEmail] = useState<string>();
     let [show, setShow] = useState(false)
-    let handleClick = () => setShow(!show)
     let navigate = useNavigate()
+    const [games, setGames] = useState<Game[]>([]);
+    const [password, setPassword] = useState("")
+    const [confirmPassword, setConfirmPassword] = useState("")
+    let [passwordMismatch, setPasswordMismatch] = useState(false);
 
     const signOut = async (_: React.MouseEvent<HTMLButtonElement>) => {
         await new AuthController().signOut()
@@ -56,6 +60,56 @@ export function AccountPage(props: {
             props.setCurrentUser(user.user);
         }
     }
+    useEffect(() => {
+        fetchGamesData();
+    }, []);
+
+    async function fetchGamesData() {
+        try {
+            const response = await new UserController().getUserGames()
+            if (response instanceof ErrorResponse) {
+                setError(true);
+            } else  {
+                setGames(response)
+            }
+
+        } catch (err) {
+            setError(true);
+        }
+    }
+
+    async function handlePasswordChange() {
+        if (password !== confirmPassword) {
+            setPasswordMismatch(true);
+            return;
+        } else {
+            setPasswordMismatch(false);
+        }
+
+        try {
+            const response = await new UserController().changeUserPassword(password);
+            if (response instanceof ErrorResponse) {
+                setError(true);
+            } else {
+            }
+        } catch (err) {
+            setError(true);
+        }
+    }
+
+    async function handleNameChange() {
+        if(newName) {
+            try {
+                const response = await new UserController().changeUserName(newName)
+                if (response instanceof ErrorResponse) {
+                    setError(true);
+                }
+            } catch (err) {
+            setError(true);
+            }
+        }
+    }
+
     return (
         <Box pt={4} pb={4} px={6}
              bgImage="url('/bg.png')"
@@ -76,15 +130,14 @@ export function AccountPage(props: {
                                     <Popover.Arrow/>
                                     <Popover.Body>
                                         <Popover.Title fontWeight="medium">Новое имя</Popover.Title>
-                                        <Input placeholder={props.currentUser?.name} size="sm"
-                                        onChange={(e) => setNewName(e.target.value)}/>
-                                       <Button colorScheme="orange" onClick={updateUser}>Обновить</Button> 
+                                        <Input value={newName}
+                                               onChange={(e) => setNewName(e.target.value)} placeholder={props.currentUser?.name} size="sm"/>
+                                        <Button onClick={handleNameChange} mt={1}>Изменить имя</Button>
                                     </Popover.Body>
                                 </Popover.Content>
                             </Popover.Positioner>
                         </Portal>
                     </Popover.Root>
-
                     <Popover.Root>
                         <Popover.Trigger asChild>
                             <Heading color="white">Ваш email: {props.currentUser?.email} ✏️</Heading>
@@ -103,9 +156,57 @@ export function AccountPage(props: {
                             </Popover.Positioner>
                         </Portal>
                     </Popover.Root>
+
+                    <Heading color="white">Указанный контакт: {props.currentUser?.contact}</Heading>
+
+                    <Popover.Root>
+                        <Popover.Trigger asChild>
+                            <Heading color="white">Изменить пароль ✏️</Heading>
+                        </Popover.Trigger>
+                        <Portal>
+                            <Popover.Positioner>
+                                <Popover.Content>
+                                    <Popover.Arrow/>
+                                    <Popover.Body>
+                                        <Field.Root orientation="horizontal">
+                                            <Field.Label>Пароль</Field.Label>
+                                            <PasswordInput value={password} onChange={(e) => setPassword(e.target.value)}/>
+                                        </Field.Root>
+                                        <Field.Root mt={1} orientation="horizontal">
+                                            <Field.Label>Повторите пароль</Field.Label>
+                                            <PasswordInput value={confirmPassword}
+                                                           onChange={(e) => setConfirmPassword(e.target.value)}/>
+                                        </Field.Root>
+                                        <Button onClick={handlePasswordChange} mt={1}>Изменить пароль</Button>
+                                    </Popover.Body>
+                                </Popover.Content>
+                            </Popover.Positioner>
+                        </Portal>
+                    </Popover.Root>
                     <Button onClick={signOut} mt={4}>Выйти</Button>
                 </Box>
             </Center>
+            {games.length > 0 && (
+                <div>
+                    <Heading size="xl" pb={1} color="white">Мои партии:</Heading>
+                    <Stack gap="4" direction="row">
+                        {games.map((game) => (
+                            <Card.Root width="400px" overflow="hidden" onClick={() => navigate(`/game/${game.id}`)}>
+                                <Card.Body gap="2">
+                                    <Image src={game.image}/>
+                                    <Card.Title mb="2">{game.system} «{game.name}»</Card.Title>
+                                    <Card.Description>
+                                        <div>{game.master}, {game.masterClub}</div>
+                                        <div>Дата: {game.date}</div>
+                                        <div>Время: {game.time}</div>
+                                    </Card.Description>
+                                </Card.Body>
+                                <Card.Footer justifyContent="flex-end">
+                                </Card.Footer>
+                            </Card.Root>
+                        ))}
+                    </Stack>
+                </div> )}
         </Box>
     );
 }
