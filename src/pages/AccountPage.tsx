@@ -28,11 +28,12 @@ export function AccountPage(props: {
     setCurrentUser: (newPersonData: User | undefined) => void;
 }) {
     const [error, setError] = useState(false);
-    const [newName, setNewName] = useState<string>();
+    const [newName, setNewName] = useState("");
     let [show, setShow] = useState(false)
     let navigate = useNavigate()
     const [games, setGames] = useState<Game[]>([]);
     const [password, setPassword] = useState("")
+    const [email, setEmail] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
     let [passwordMismatch, setPasswordMismatch] = useState(false);
 
@@ -44,7 +45,7 @@ export function AccountPage(props: {
     }
 
     async function updateUser() {
-        let updateRequest = new UpdateRequest(newEmail, newPassword, newName);
+        let updateRequest = new UpdateRequest(email, password, newName);
 
         let response = await new UserController().updateUser(updateRequest);
         
@@ -97,19 +98,7 @@ export function AccountPage(props: {
         }
     }
 
-    async function handleNameChange() {
-        if(newName) {
-            try {
-                const response = await new UserController().changeUserName(newName)
-                if (response instanceof ErrorResponse) {
-                    setError(true);
-                }
-            } catch (err) {
-            setError(true);
-            }
-        }
-    }
-
+    
     return (
         <Box pt={4} pb={4} px={6}
              bgImage="url('/bg.png')"
@@ -132,7 +121,7 @@ export function AccountPage(props: {
                                         <Popover.Title fontWeight="medium">Новое имя</Popover.Title>
                                         <Input value={newName}
                                                onChange={(e) => setNewName(e.target.value)} placeholder={props.currentUser?.name} size="sm"/>
-                                        <Button onClick={handleNameChange} mt={1}>Изменить имя</Button>
+                                        <Button onClick={updateUser} mt={1}>Изменить имя</Button>
                                     </Popover.Body>
                                 </Popover.Content>
                             </Popover.Positioner>
