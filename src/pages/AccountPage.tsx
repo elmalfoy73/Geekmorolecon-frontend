@@ -16,16 +16,18 @@ import {ErrorResponse} from "../controllers/BaseController";
 import {LuCheck, LuPencilLine, LuX} from "react-icons/lu";
 import {AuthController} from "../controllers/AuthController";
 import {useNavigate} from "react-router-dom";
+import {UpdateRequest} from "../model/user/UpdateRequest";
 
 
 export function AccountPage(props: {
     currentUser: User | undefined;
-    setCurrentUser: (newPersonData: undefined) => void;
+    setCurrentUser: (newPersonData: User | undefined) => void;
 }) {
     const [error, setError] = useState(false);
     const [newName, setNewName] = useState<string>();
     const [prevPassword, setPrevPassword] = useState<string>();
     const [newPassword, setNewPassword] = useState<string>();
+    const [newEmail, setEmail] = useState<string>();
     let [show, setShow] = useState(false)
     let handleClick = () => setShow(!show)
     let navigate = useNavigate()
@@ -37,6 +39,23 @@ export function AccountPage(props: {
         navigate('/')
     }
 
+    async function updateUser() {
+        let updateRequest = new UpdateRequest(newEmail, newPassword, newName);
+
+        let response = await new UserController().updateUser(updateRequest);
+        
+        localStorage.removeItem("token")
+        if (typeof response == "string"){
+            localStorage.setItem("token", response)
+        }
+
+        let user = await new UserController().getCurrentUser();
+        if (user instanceof ErrorResponse) {
+            setError(true);
+        } else {
+            props.setCurrentUser(user.user);
+        }
+    }
     return (
         <Box pt={4} pb={4} px={6}
              bgImage="url('/bg.png')"
@@ -49,7 +68,7 @@ export function AccountPage(props: {
                     <Image h="200px" src="dragon.png"/>
                     <Popover.Root>
                         <Popover.Trigger asChild>
-                            <Heading color="white">{props.currentUser?.name} ✏️</Heading>
+                            <Heading color="white">Ваше имя: {props.currentUser?.name} ✏️</Heading>
                         </Popover.Trigger>
                         <Portal>
                             <Popover.Positioner>
@@ -57,7 +76,9 @@ export function AccountPage(props: {
                                     <Popover.Arrow/>
                                     <Popover.Body>
                                         <Popover.Title fontWeight="medium">Новое имя</Popover.Title>
-                                        <Input placeholder={props.currentUser?.name} size="sm"/>
+                                        <Input placeholder={props.currentUser?.name} size="sm"
+                                        onChange={(e) => setNewName(e.target.value)}/>
+                                       <Button colorScheme="orange" onClick={updateUser}>Обновить</Button> 
                                     </Popover.Body>
                                 </Popover.Content>
                             </Popover.Positioner>
@@ -66,7 +87,7 @@ export function AccountPage(props: {
 
                     <Popover.Root>
                         <Popover.Trigger asChild>
-                            <Heading color="white">{props.currentUser?.email} ✏️</Heading>
+                            <Heading color="white">Ваш email: {props.currentUser?.email} ✏️</Heading>
                         </Popover.Trigger>
                         <Portal>
                             <Popover.Positioner>
@@ -74,7 +95,9 @@ export function AccountPage(props: {
                                     <Popover.Arrow/>
                                     <Popover.Body>
                                         <Popover.Title fontWeight="medium">Новый email</Popover.Title>
-                                        <Input placeholder={props.currentUser?.email} size="sm"/>
+                                        <Input placeholder={props.currentUser?.email} size="sm"
+                                        onChange={(e) => setEmail(e.target.value)}/>
+                                       <Button colorScheme="orange" onClick={updateUser}>Обновить</Button> 
                                     </Popover.Body>
                                 </Popover.Content>
                             </Popover.Positioner>

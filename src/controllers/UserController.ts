@@ -1,6 +1,7 @@
 import {BaseController} from "./BaseController";
 import {User} from "../model/user/User";
 import {Game} from "../model/Game";
+import {UpdateRequest} from "../model/user/UpdateRequest";
 
 export class UserController extends BaseController {
     async getCurrentUser() {
@@ -11,5 +12,10 @@ export class UserController extends BaseController {
     async getUserGames() {
         let url = "user-games";
         return await this.api<Game[]>(url)
+    }
+
+    async updateUser(user: UpdateRequest) {
+        let url = "update-user";
+        return await this.api<string>(url, user, "POST")
     }
 }
