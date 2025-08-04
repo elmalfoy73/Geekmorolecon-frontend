@@ -7,7 +7,7 @@ export function receiveAndUpdateCurrentUser(
     finished: () => void
 ) {
     let token = localStorage.getItem("token")
-    if (token != null) {
+    if (token != "") {
         let controller = new UserController()
         controller.getCurrentUser().then((response) => {
             if (response instanceof ErrorResponse) {

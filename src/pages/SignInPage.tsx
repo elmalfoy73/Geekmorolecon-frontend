@@ -25,19 +25,19 @@ export function SignInPage(props: { currentUser: User | undefined; setCurrentUse
         } else {
             if(!response.exists) {
                 setError("Пользователя с таким email не существует!");
-            }
-            if(!response.passMatch) {
+            } else if(!response.passMatch) {
                 setError("Неверный пароль");
-            }
-            setError(null);
-            localStorage.setItem("token", response.token)
-            let user = await new UserController().getCurrentUser();
-            if (user instanceof ErrorResponse) {
-                setError("");
             } else {
-                props.setCurrentUser(user.user);
-                console.log(props.currentUser?.name);
-                navigate("/")
+                setError(null);
+                localStorage.setItem("token", response.token)
+                let user = await new UserController().getCurrentUser();
+                if (user instanceof ErrorResponse) {
+                    setError("");
+                } else {
+                    props.setCurrentUser(user.user);
+                    console.log(props.currentUser?.name);
+                    navigate("/")
+                }
             }
         }
     }
@@ -63,6 +63,9 @@ export function SignInPage(props: { currentUser: User | undefined; setCurrentUse
                             <Field.Label>Пароль</Field.Label>
                             <PasswordInput value={password} onChange={(e) => setPassword(e.target.value)}/>
                         </Field.Root>
+                        {error && <div className="errorMessage" style={{color: "red"}}>
+                            {error}
+                        </div>}
                     </Stack>
                 </Card.Body>
                 <Card.Footer justifyContent="flex-end">
