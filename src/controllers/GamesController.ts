@@ -27,4 +27,9 @@ export class GamesController extends BaseController {
         let url = "createSection";
         return await this.api<any>(url, game,"POST")
     }
+
+    async updateGame(game: Game) {
+        let url = "update-section/"+game.id;
+        return await this.api<any>(url, game,"POST")
+    }
 }

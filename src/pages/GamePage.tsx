@@ -98,6 +98,9 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
                             ) : (
                                 <Badge colorPalette="red" size="md">Мест нет</Badge>
                             )}
+                            {props.currentUser?.isAdmin && (
+                                <Button colorPalette='orange' onClick={() => navigate(`/editGame/${game.id}`)}>Редактировать партию</Button>
+                            )}
                         </Card.Footer>
                     </Card.Root>
                 </div>

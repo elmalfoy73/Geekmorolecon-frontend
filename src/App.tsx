@@ -13,6 +13,7 @@ import {User} from "./model/user/User";
 import {AccountPage} from "./pages/AccountPage";
 import {GamePage} from "./pages/GamePage";
 import {GameCreationPage} from "./pages/GameCreationPage";
+import {EditGamePage} from "./pages/EditGamePage";
 
 function App() {
 
@@ -35,7 +36,7 @@ function App() {
                 {path: "/account", element: <AccountPage currentUser={currentUser} setCurrentUser={setCurrentUser}/>},
                 {path: "/createGame", element: <GameCreationPage currentUser={currentUser} setCurrentUser={setCurrentUser}/>},
                 {path: "/game/:id", element: <GamePage currentUser={currentUser} setCurrentUser={setCurrentUser}/>,},
-
+                {path: "/editGame/:id", element: <EditGamePage currentUser={currentUser} setCurrentUser={setCurrentUser}/>,},
             ]
         },
     ]);
