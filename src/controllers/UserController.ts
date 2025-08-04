@@ -1,7 +1,7 @@
 import {BaseController} from "./BaseController";
 import {User} from "../model/user/User";
 import {Game} from "../model/Game";
-import {UpdateRequest} from "../model/user/UpdateRequest";
+import {UpdateRequest} from "../model/utils/UpdateRequest";
 
 export class UserController extends BaseController {
     async getCurrentUser() {

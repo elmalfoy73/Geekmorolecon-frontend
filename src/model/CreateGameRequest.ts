@@ -1,5 +1,4 @@
-export class Game {
-    id: string;
+export class CreateGameRequest {
     counter: number;
     date: string;
     description: string;
@@ -10,14 +9,11 @@ export class Game {
     places: number;
     system: string;
     time: string;
-    users: string[];
 
     constructor(
-        id: string,
         counter: number,
         description: string,
         name: string,
-        users: string[],
         date: string,
         image: string,
         master: string,
@@ -26,11 +22,9 @@ export class Game {
         system: string,
         time: string
     ) {
-        this.id = id;
         this.counter = counter;
         this.description = description;
         this.name = name;
-        this.users = users;
         this.date = date;
         this.image = image;
         this.master = master;

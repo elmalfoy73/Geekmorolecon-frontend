@@ -1,5 +1,6 @@
 import {BaseController} from "./BaseController";
 import {Game} from "../model/Game";
+import {CreateGameRequest} from "../model/CreateGameRequest";
 
 export class GamesController extends BaseController {
     async getAllGames() {
@@ -20,5 +21,10 @@ export class GamesController extends BaseController {
     async leaveGame(id: string) {
         let url = "delete-entry/"+id;
         return await this.api<any>(url, {},"POST")
+    }
+
+    async createGame(game: CreateGameRequest) {
+        let url = "createSection";
+        return await this.api<any>(url, game,"POST")
     }
 }

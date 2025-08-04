@@ -16,7 +16,7 @@ import {ErrorResponse} from "../controllers/BaseController";
 import {LuCheck, LuPencilLine, LuX} from "react-icons/lu";
 import {AuthController} from "../controllers/AuthController";
 import {useNavigate} from "react-router-dom";
-import {UpdateRequest} from "../model/user/UpdateRequest";
+import {UpdateRequest} from "../model/utils/UpdateRequest";
 import {GamesController} from "../controllers/GamesController";
 import {Game} from "../model/Game";
 import {PasswordInput} from "../components/ui/password-input";
@@ -173,6 +173,9 @@ export function AccountPage(props: {
                         </Portal>
                     </Popover.Root>
                     <Button onClick={signOut} mt={4}>Выйти</Button>
+                    {props.currentUser?.isAdmin && (
+                        <Button colorPalette='orange' asChild mt={4} ml={4}><a href="/createGame">Создание партии</a></Button>
+                    )}
                 </Box>
             </Center>
             {games.length > 0 && (
