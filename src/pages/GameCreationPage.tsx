@@ -29,7 +29,7 @@ export function GameCreationPage(props: {
 
     async function handleForm() {
 
-        let game = new CreateGameRequest(counter, description, name, date, "", master, masterClub, places, system, time);
+        let game = new CreateGameRequest(counter, description, name, date, "", master, masterClub, places, system, time, "Партия");
 
         let response = await new GamesController().createGame(game);
         if (response instanceof ErrorResponse) {

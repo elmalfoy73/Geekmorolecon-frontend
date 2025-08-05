@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {PasswordInput} from "../components/ui/password-input";
-import {Box, Button, Card, Field, Input, Stack} from "@chakra-ui/react";
+import {Box, Button, Card, Field, Input, Stack, Center} from "@chakra-ui/react";
 import {AuthController} from "../controllers/AuthController";
 import {ErrorResponse} from "../controllers/BaseController";
 import {SignInRequest} from "../model/user/auth/SignInRequest";
@@ -43,35 +43,40 @@ export function SignInPage(props: { currentUser: User | undefined; setCurrentUse
     }
 
     return (
-        <Box pt={4} pb={4} px={6}
+        <Box pt={40} pb={40} px={6}
              bgImage="url('/bg.png')"
              bgSize="cover"
              bgRepeat="no-repeat"
              bgAttachment="fixed">
-
-            <Card.Root maxW="md">
+            <Center>
+            <Card.Root size="lg">
+                <Center>
                 <Card.Header>
-                    <Card.Title>Sign In</Card.Title>
+                    <Card.Title mb="4" fontSize="3xl">Вход</Card.Title>
                 </Card.Header>
+                </Center>
                 <Card.Body>
-                    <Stack gap="4" w="full">                <Field.Root orientation="horizontal">
-                        <Field.Label>Email</Field.Label>
+                    <Stack gap="40px">     
+                        <Field.Root orientation="horizontal">
+                        <Field.Label fontSize="1em">Email</Field.Label>
                         <Input placeholder="me@example.com" flex="1" value={email}
                                onChange={(e) => setEmail(e.target.value)}/>
-                    </Field.Root>
+                        </Field.Root>
+
                         <Field.Root orientation="horizontal">
-                            <Field.Label>Пароль</Field.Label>
+                            <Field.Label fontSize="1em">Пароль</Field.Label>
                             <PasswordInput value={password} onChange={(e) => setPassword(e.target.value)}/>
                         </Field.Root>
                         {error && <div className="errorMessage" style={{color: "red"}}>
                             {error}
                         </div>}
+                    <Center>
+                        <Button size="lg" colorScheme="orange" onClick={handleForm}>Войти</Button>
+                    </Center>
                     </Stack>
                 </Card.Body>
-                <Card.Footer justifyContent="flex-end">
-                    <Button colorScheme="orange" onClick={handleForm}>Войти</Button>
-                </Card.Footer>
             </Card.Root>
+            </Center>
         </Box>
     )
 }

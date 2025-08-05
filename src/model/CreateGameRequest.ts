@@ -9,6 +9,7 @@ export class CreateGameRequest {
     places: number;
     system: string;
     time: string;
+    type: string;
 
     constructor(
         counter: number,
@@ -20,8 +21,10 @@ export class CreateGameRequest {
         masterClub: string,
         places: number,
         system: string,
-        time: string
+        time: string,
+        type: string
     ) {
+        this.type = type;
         this.counter = counter;
         this.description = description;
         this.name = name;
