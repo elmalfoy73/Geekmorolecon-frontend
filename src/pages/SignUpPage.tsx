@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {PasswordInput} from "../components/ui/password-input";
-import {Box, Button, Card, Field, Input, Stack} from "@chakra-ui/react";
+import {Box, Button, Card, Center, Field, Input, Stack} from "@chakra-ui/react";
 import {SignUpRequest} from "../model/user/auth/SignUpRequest";
 import {AuthController} from "../controllers/AuthController";
 import {ErrorResponse} from "../controllers/BaseController";
@@ -51,19 +51,18 @@ export function SignUpPage(props: { currentUser: User | undefined; setCurrentUse
 
     return (
 
-        <Box pt={4} pb={4} px={6}
+        <Box pt={40} pb={40} px={6}
              bgImage="url('/bg.png')"
              bgSize="cover"
              bgRepeat="no-repeat"
              bgAttachment="fixed">
-
-            <Card.Root maxW="md">
-                <Card.Header>
-                    <Card.Title>Sign up</Card.Title>
-                    <Card.Description>
-                        Зарегистрируйтесь на сайте для записи на партии
-                    </Card.Description>
-                </Card.Header>
+            <Center>
+            <Card.Root minW="xl">
+                <Center>
+                    <Card.Header>
+                        <Card.Title mb="4" fontSize="3xl">Регистрация</Card.Title>
+                    </Card.Header>
+                </Center>
                 <Card.Body>
                     <Stack gap="4" w="full">
                         <Field.Root orientation="horizontal">
@@ -99,6 +98,7 @@ export function SignUpPage(props: { currentUser: User | undefined; setCurrentUse
                     <Button colorScheme="orange" onClick={handleForm} mt={4}>Зарегистрироваться</Button>
                 </Card.Footer>
             </Card.Root>
+                </Center>
         </Box>
 )
 }

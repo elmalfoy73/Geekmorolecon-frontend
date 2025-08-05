@@ -49,7 +49,7 @@ export function SignInPage(props: { currentUser: User | undefined; setCurrentUse
              bgRepeat="no-repeat"
              bgAttachment="fixed">
             <Center>
-            <Card.Root size="lg">
+            <Card.Root minW="xl">
                 <Center>
                 <Card.Header>
                     <Card.Title mb="4" fontSize="3xl">Вход</Card.Title>

@@ -7,7 +7,7 @@ import {Game} from "../model/Game";
 import {
     Box,
     Button,
-    Card,
+    Card, Center,
     Field,
     Input,
     NumberInput,
@@ -43,6 +43,10 @@ export function EditGamePage(props: { currentUser: User | undefined; setCurrentU
             setError(true);
         }
     }
+
+    useEffect(() => {
+        fetchGameData();
+    }, []);
 
     // После получения данных устанавливаем значения в состояния
     useEffect(() => {
@@ -81,24 +85,24 @@ export function EditGamePage(props: { currentUser: User | undefined; setCurrentU
             console.error(response.text);
         } else {
             console.log("Game updated successfully");
+            navigate(`/game/${game.id}`)}
         }
-    }
 
-    useEffect(() => {
-        fetchGameData();
-    }, []);
 
     return (
-        <Box pt={4} pb={4} px={6}
+        <Box pt={40} pb={40} px={6}
              bgImage="url('/bg.png')"
              bgSize="cover"
              bgRepeat="no-repeat"
              bgAttachment="fixed">
+            <Center>
             {game && (
-                <Card.Root maxW="md">
-                    <Card.Header>
-                        <Card.Title>Редактирование партии</Card.Title>
-                    </Card.Header>
+                <Card.Root minW="xl">
+                    <Center>
+                        <Card.Header>
+                            <Card.Title mb="4" fontSize="3xl">Редактирование партии</Card.Title>
+                        </Card.Header>
+                    </Center>
                     <Card.Body>
                         <Stack gap="4" w="full">
                             <Field.Root orientation="horizontal">
@@ -147,6 +151,7 @@ export function EditGamePage(props: { currentUser: User | undefined; setCurrentU
                     </Card.Footer>
                 </Card.Root>
             )}
+            </Center>
         </Box>
     );
 }

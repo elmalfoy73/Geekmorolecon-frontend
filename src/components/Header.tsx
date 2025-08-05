@@ -43,9 +43,6 @@ export function Header(props: { currentUser: User | undefined }) {
                         <Button asChild><a href="/games">Партии</a></Button>
                         <Button>Расписание</Button>
                         <Button colorPalette='orange' asChild><a href="/account">{props.currentUser?.name}</a></Button>
-                        {props.currentUser?.isAdmin && (
-                            <Button colorPalette='orange' asChild><a href="/account">Админка</a></Button>
-                        )}
                     </ButtonGroup>
                 </Box>
             </Stack>

@@ -30,47 +30,62 @@ export function GamesPage(props: { currentUser: User | undefined; setCurrentUser
     }, []);
 
     return (
-        <Box pt={4} pb={4} px={6}
-             bgImage="url('/bg.png')"
-             bgSize="cover"
-             bgRepeat="no-repeat"
-             bgAttachment="fixed">
-                <Heading size="xl" pb={1} color="white">Список партий:</Heading>
-                {error && <div>Произошла ошибка при загрузке партий.</div>}
+        <Box
+            pt={4}
+            pb={4}
+            px={6}
+            bgImage="url('/bg.png')"
+            bgSize="cover"
+            bgRepeat="no-repeat"
+            bgAttachment="fixed"
+        >
+            <Heading size="xl" pb={1} color="white">
+                Список партий:
+            </Heading>
+            {error && <div>Произошла ошибка при загрузке партий.</div>}
 
-                {games.length > 0 ? (
-                    <div>
-                        <Stack gap="4" direction="row">
-                            {games.map((game) => (
-                                    <Card.Root width="400px" overflow="hidden" onClick={() => navigate(`/game/${game.id}`)}>
-                                        <Card.Body gap="2">
-                                            <Image src={game.image}/>
-                                            <Card.Title mb="2">{game.system} «{game.name}»</Card.Title>
-                                            <Card.Description>
-                                                <div>{game.master}, {game.masterClub}</div>
-                                                <div>Дата: {game.date}</div>
-                                                <div>Время: {game.time}</div>
-                                                <div>{game.description}</div>
-                                                <div>{game.places} мест, свободно: {game.counter}</div>
-                                            </Card.Description>
-                                        </Card.Body>
-                                        <Card.Footer justifyContent="flex-end">
-                                            {game.counter > 0 ? (
-                                                <Badge colorPalette="green" size="md">Записаться</Badge>
-                                                ) : (
-                                                <Badge colorPalette="red" size="md">Мест нет</Badge>
-                                            )}
-
-                                        </Card.Footer>
-                                    </Card.Root>
-                                ))}
-                        </Stack>
-                    </div>
-                ) : (
-                    <Box mt={4}>
-                        <Heading size="md" pb={1} color="white">Партий нет(</Heading>
-                    </Box>
-                )}
+            {games.length > 0 ? (
+                <Box
+                    display="grid"
+                    gridTemplateColumns="repeat(3, 1fr)"
+                    gap={6}
+                    mt={4}
+                >
+                    {games.map((game) => (
+                        <Card.Root
+                            key={game.id}
+                            minW="0"
+                            overflow="hidden"
+                            onClick={() => navigate(`/game/${game.id}`)}
+                        >
+                            <Card.Body gap="2">
+                                <Image src={game.image} />
+                                <Card.Title mb="2">
+                                    {game.system} «{game.name}»
+                                </Card.Title>
+                                <Card.Description>
+                                    <div>{game.master}, {game.masterClub}</div>
+                                    <div>Дата: {game.date}</div>
+                                    <div>Время: {game.time}</div>
+                                    <div>{game.description}</div>
+                                    <div>{game.places} мест, свободно: {game.counter}</div>
+                                </Card.Description>
+                            </Card.Body>
+                            <Card.Footer justifyContent="flex-end">
+                                {game.counter > 0 ? (
+                                    <Badge colorPalette="green" size="md">Записаться</Badge>
+                                ) : (
+                                    <Badge colorPalette="red" size="md">Мест нет</Badge>
+                                )}
+                            </Card.Footer>
+                        </Card.Root>
+                    ))}
+                </Box>
+            ) : (
+                <Box mt={4}>
+                    <Heading size="md" pb={1} color="white">Партий нет(</Heading>
+                </Box>
+            )}
         </Box>
     );
 }

@@ -4,7 +4,7 @@ import {GamesController} from "../controllers/GamesController";
 import {ErrorResponse} from "../controllers/BaseController";
 import React, {useEffect, useState} from "react";
 import {Game} from "../model/Game";
-import {Badge, Box, Button, Card, Heading, Image, List, Stack} from "@chakra-ui/react";
+import {Badge, Box, Button, Card, Center, Heading, Image, List, Stack} from "@chakra-ui/react";
 
 export function GamePage(props: { currentUser: User | undefined; setCurrentUser: (newPersonData: User) => void; }) {
     const {id} = useParams<{ id: string }>();
@@ -62,16 +62,17 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
 
 
     return (
-        <Box pt={4} pb={4} px={6}
+        <Box pt={40} pb={40} px={6}
              bgImage="url('/bg.png')"
              bgSize="cover"
              bgRepeat="no-repeat"
              bgAttachment="fixed">
+            <Center>
             {game && (
                 <div>
                     <Card.Root maxW="xl" overflow="hidden">
+                        <Image src={game.image}/>
                         <Card.Body gap="2">
-                            <Image src={game.image}/>
                             <Card.Title mb="2">{game.system} «{game.name}»</Card.Title>
                             <Card.Description>
                                 <div>{game.master}, {game.masterClub}</div>
@@ -105,6 +106,7 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
                     </Card.Root>
                 </div>
             )}
+                </Center>
         </Box>
 )
     ;

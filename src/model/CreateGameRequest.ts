@@ -2,7 +2,7 @@ export class CreateGameRequest {
     counter: number;
     date: string;
     description: string;
-    image: string;
+    image: File | null;
     master: string;
     masterClub: string;
     name: string;
@@ -16,7 +16,7 @@ export class CreateGameRequest {
         description: string,
         name: string,
         date: string,
-        image: string,
+        image: File | null,
         master: string,
         masterClub: string,
         places: number,
