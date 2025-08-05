@@ -24,6 +24,7 @@ import {UserController} from "../controllers/UserController";
 import {CreateGameRequest} from "../model/CreateGameRequest";
 import {GamesController} from "../controllers/GamesController";
 import {LuFileImage} from "react-icons/lu";
+import {useNavigate} from "react-router-dom";
 
 export function GameCreationPage(props: {
     currentUser: User | undefined;
@@ -41,6 +42,7 @@ export function GameCreationPage(props: {
     const [time, setTime] = useState("")
     const [isGame, setIsGame] = useState(false)
     const [preview, setPreview] = useState<string | null>(null);
+    let navigate = useNavigate()
 
     async function handleForm() {
         const formData = new FormData();
@@ -64,20 +66,18 @@ export function GameCreationPage(props: {
             formData.append("image", image);
         }
 
-        const response = await fetch("http://127.0.0.1:5000/api/createSection", {
-            method: "POST",
-            body: formData,
-            headers: {
-                Authorization: "Bearer " + localStorage.getItem("token")!
-            }
-        });
-        const data = await response.json();
-        console.log(data);
+        try {
+            const response = await new GamesController().createGame(formData);
 
-        if (response instanceof ErrorResponse) {
-            console.log(response.text);
-        } else {
-            console.log(response.text);
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error("Ошибка:", errorText);
+                return;
+            }
+            const data = await response.json();
+            navigate(`/games/${data.id}`);
+        } catch (error) {
+            console.error("Ошибка при отправке:", error);
         }
     }
 

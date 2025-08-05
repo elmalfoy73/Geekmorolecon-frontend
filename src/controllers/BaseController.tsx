@@ -19,13 +19,9 @@ export class BaseController {
     }
 
     async request(url: string, body: any, method: string) {
-        let headers: Headers = new Headers();
-        const isFormData = body instanceof FormData;
-        // Только для JSON добавляем Content-Type
-        if (!isFormData) {
-            headers.append('Content-Type', 'application/json');
-        }
-
+        let headers: Headers = new Headers({
+            'Content-Type': 'application/json'
+        });
         const token = localStorage.getItem("token")
         if (token != null) {
             headers.append("Authorization", "Bearer " + token)

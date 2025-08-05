@@ -29,7 +29,12 @@ export class GamesController extends BaseController {
     }
 
     async createGame(gameData: FormData) {
-        let url: string = "createSection";
-        return await this.api<any>(url, gameData, "POST");
+        return await fetch("http://127.0.0.1:5000/api/createSection", {
+            method: "POST",
+            body: gameData,
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("token")!
+            }
+        });
     }
 }
