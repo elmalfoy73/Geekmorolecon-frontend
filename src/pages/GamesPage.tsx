@@ -40,7 +40,7 @@ export function GamesPage(props: { currentUser: User | undefined; setCurrentUser
             bgRepeat="no-repeat"
             bgAttachment="fixed"
         >
-            <Heading size="xl" pb={1} color="white">
+            <Heading size="7xl" pb={1} color="white">
                 Список партий:
             </Heading>
             {error && <div>Произошла ошибка при загрузке партий.</div>}
@@ -49,8 +49,8 @@ export function GamesPage(props: { currentUser: User | undefined; setCurrentUser
                 <Box
                     display="grid"
                     gridTemplateColumns="repeat(3, 1fr)"
-                    gap={6}
-                    mt={4}
+                    gap={10}
+                    mt={10}
                 >
                     {games.map((game) => (
                         <GameCard

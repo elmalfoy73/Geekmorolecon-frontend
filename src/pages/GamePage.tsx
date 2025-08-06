@@ -5,6 +5,7 @@ import {ErrorResponse} from "../controllers/BaseController";
 import React, {useEffect, useState} from "react";
 import {Game} from "../model/Game";
 import {Badge, Box, Button, Card, Center, Heading, Image, List, Stack} from "@chakra-ui/react";
+import {UserController} from "../controllers/UserController";
 
 export function GamePage(props: { currentUser: User | undefined; setCurrentUser: (newPersonData: User) => void; }) {
     const {id} = useParams<{ id: string }>();
@@ -90,6 +91,8 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
                                     {game.users.map((user)=>(
                                         <List.Item>
                                             {user}
+                                            {props.currentUser?.isAdmin && (
+                                            <Button onClick={() => new UserController().deleteFromGame(game.id, user)} color="red">Удалить</Button>)}
                                         </List.Item>))}
                                 </List.Root>
                             </Card.Description>

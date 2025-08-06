@@ -27,4 +27,9 @@ export class UserController extends BaseController {
         let url = "update-user";
         return await this.api<any>(url, {name : name}, "POST");
     }
+
+    async deleteFromGame(game: string, user: string) {
+        let url = "delete-entry/"+game+"/"+user;
+        return await this.api<any>(url);
+    }
 }

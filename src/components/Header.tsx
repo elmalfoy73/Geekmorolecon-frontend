@@ -9,6 +9,7 @@ export function Header(props: { currentUser: User | undefined }) {
             <Stack direction='column'>
                 <Box
                     display='flex'
+                    bg='#363836'
                     alignItems='center'
                     justifyContent='space-between'
                     width='100%'
@@ -31,6 +32,7 @@ export function Header(props: { currentUser: User | undefined }) {
             <Stack direction='column'>
                 <Box
                     display='flex'
+                    bg='#363836'
                     alignItems='center'
                     justifyContent='space-between'
                     width='100%'
