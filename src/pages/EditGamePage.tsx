@@ -67,7 +67,7 @@ export function EditGamePage(props: { currentUser: User | undefined; setCurrentU
 
         const updatedGame = new Game(
             game.id,
-            game.counter,
+            places - game.users.length,
             description,
             name,
             game.users,
@@ -77,7 +77,8 @@ export function EditGamePage(props: { currentUser: User | undefined; setCurrentU
             masterClub,
             places,
             system,
-            time
+            time,
+            game.type
         );
 
         const response = await new GamesController().updateGame(updatedGame);

@@ -5,6 +5,7 @@ import {Badge, Box, Button, Card, For, Heading, Image, List, ListItem, Stack} fr
 import {Game} from "../model/Game";
 import {User} from "../model/user/User";
 import {useNavigate} from "react-router-dom";
+import {GameCard} from "../components/GameCard";
 
 export function GamesPage(props: { currentUser: User | undefined; setCurrentUser: (newPersonData: User) => void; }) {
     const [error, setError] = useState(false);
@@ -52,33 +53,11 @@ export function GamesPage(props: { currentUser: User | undefined; setCurrentUser
                     mt={4}
                 >
                     {games.map((game) => (
-                        <Card.Root
+                        <GameCard
                             key={game.id}
-                            minW="0"
-                            overflow="hidden"
+                            game={game}
                             onClick={() => navigate(`/game/${game.id}`)}
-                        >
-                            <Card.Body gap="2">
-                                <Image src={game.image} />
-                                <Card.Title mb="2">
-                                    {game.system} «{game.name}»
-                                </Card.Title>
-                                <Card.Description>
-                                    <div>{game.master}, {game.masterClub}</div>
-                                    <div>Дата: {game.date}</div>
-                                    <div>Время: {game.time}</div>
-                                    <div>{game.description}</div>
-                                    <div>{game.places} мест, свободно: {game.counter}</div>
-                                </Card.Description>
-                            </Card.Body>
-                            <Card.Footer justifyContent="flex-end">
-                                {game.counter > 0 ? (
-                                    <Badge colorPalette="green" size="md">Записаться</Badge>
-                                ) : (
-                                    <Badge colorPalette="red" size="md">Мест нет</Badge>
-                                )}
-                            </Card.Footer>
-                        </Card.Root>
+                        />
                     ))}
                 </Box>
             ) : (

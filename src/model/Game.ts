@@ -11,6 +11,7 @@ export class Game {
     system: string;
     time: string;
     users: string[];
+    type: string;
 
     constructor(
         id: string,
@@ -24,8 +25,9 @@ export class Game {
         masterClub: string,
         places: number,
         system: string,
-        time: string
-    ) {
+        time: string,
+        type: string
+) {
         this.id = id;
         this.counter = counter;
         this.description = description;
@@ -38,5 +40,6 @@ export class Game {
         this.places = places;
         this.system = system;
         this.time = time;
+        this.type = type;
     }
 }

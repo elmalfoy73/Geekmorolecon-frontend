@@ -73,9 +73,14 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
                     <Card.Root maxW="xl" overflow="hidden">
                         <Image src={game.image}/>
                         <Card.Body gap="2">
-                            <Card.Title mb="2">{game.system} «{game.name}»</Card.Title>
+                            {game.type === "Партия" ? (
+                                <Card.Title mb="2">{game.system} «{game.name}»</Card.Title>
+                            ) : (
+                                <Card.Title mb="2">{game.name}</Card.Title>
+                            )}
                             <Card.Description>
-                                <div>{game.master}, {game.masterClub}</div>
+                                {game.type === "Партия" &&
+                                <div>{game.master}, {game.masterClub}</div> }
                                 <div>Дата: {game.date}</div>
                                 <div>Время: {game.time}</div>
                                 <div>{game.description}</div>

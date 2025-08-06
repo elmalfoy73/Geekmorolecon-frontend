@@ -1,12 +1,17 @@
 import {BaseController} from "./BaseController";
 import {Game} from "../model/Game";
-import {CreateGameRequest} from "../model/CreateGameRequest";
 
 export class GamesController extends BaseController {
     async getAllGames() {
         let url = "games";
         return await this.api<Game[]>(url)
     }
+
+    async getAllActivities() {
+        let url = "sections";
+        return await this.api<Game[]>(url)
+    }
+
 
     async getGame(id: string) {
         let url = "games/"+id;

@@ -19,7 +19,7 @@ export function Header(props: { currentUser: User | undefined }) {
                     <ButtonGroup gap='4'>
                         <Button asChild><a href="/">Главная</a></Button>
                         <Button asChild><a href="/games">Партии</a></Button>
-                        <Button>Расписание</Button>
+                        <Button asChild><a href="/activities">Активности</a></Button>
                         <Button asChild><a href="/signIn">Войти</a></Button>
                         <Button colorPalette='orange' asChild><a href="/signUp">Зарегистрироваться</a></Button>
                     </ButtonGroup>
@@ -41,7 +41,7 @@ export function Header(props: { currentUser: User | undefined }) {
                     <ButtonGroup gap='4'>
                         <Button asChild><a href="/">Главная</a></Button>
                         <Button asChild><a href="/games">Партии</a></Button>
-                        <Button>Расписание</Button>
+                        <Button asChild><a href="/activities">Активности</a></Button>
                         <Button colorPalette='orange' asChild><a href="/account">{props.currentUser?.name}</a></Button>
                     </ButtonGroup>
                 </Box>

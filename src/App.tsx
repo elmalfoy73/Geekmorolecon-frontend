@@ -14,6 +14,7 @@ import {AccountPage} from "./pages/AccountPage";
 import {GamePage} from "./pages/GamePage";
 import {GameCreationPage} from "./pages/GameCreationPage";
 import {EditGamePage} from "./pages/EditGamePage";
+import {ActivitiesPage} from "./pages/ActivitiesPage";
 
 function App() {
 
@@ -33,6 +34,7 @@ function App() {
                 {path: "/signIn", element: <SignInPage currentUser={currentUser} setCurrentUser={setCurrentUser}/>},
                 {path: "/signUp", element: <SignUpPage currentUser={currentUser} setCurrentUser={setCurrentUser}/>},
                 {path: "/games", element: <GamesPage currentUser={currentUser} setCurrentUser={setCurrentUser}/>},
+                {path: "/activities", element: <ActivitiesPage currentUser={currentUser} setCurrentUser={setCurrentUser}/>},
                 {path: "/account", element: <AccountPage currentUser={currentUser} setCurrentUser={setCurrentUser}/>},
                 {path: "/createGame", element: <GameCreationPage currentUser={currentUser} setCurrentUser={setCurrentUser}/>},
                 {path: "/game/:id", element: <GamePage currentUser={currentUser} setCurrentUser={setCurrentUser}/>,},

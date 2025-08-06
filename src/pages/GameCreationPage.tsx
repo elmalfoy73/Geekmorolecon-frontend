@@ -14,16 +14,9 @@ import {
     Switch,
     Textarea
 } from "@chakra-ui/react";
-import {PasswordInput} from "../components/ui/password-input";
 import React, {useState} from "react";
 import { withMask } from "use-mask-input"
-import {SignUpRequest} from "../model/user/auth/SignUpRequest";
-import {AuthController} from "../controllers/AuthController";
-import {ErrorResponse} from "../controllers/BaseController";
-import {UserController} from "../controllers/UserController";
-import {CreateGameRequest} from "../model/CreateGameRequest";
 import {GamesController} from "../controllers/GamesController";
-import {LuFileImage} from "react-icons/lu";
 import {useNavigate} from "react-router-dom";
 
 export function GameCreationPage(props: {
@@ -75,7 +68,7 @@ export function GameCreationPage(props: {
                 return;
             }
             const data = await response.json();
-            navigate(`/games/${data.id}`);
+            navigate(`/game/${data.id}`);
         } catch (error) {
             console.error("Ошибка при отправке:", error);
         }
