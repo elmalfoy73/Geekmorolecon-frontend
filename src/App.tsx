@@ -15,6 +15,8 @@ import {GamePage} from "./pages/GamePage";
 import {GameCreationPage} from "./pages/GameCreationPage";
 import {EditGamePage} from "./pages/EditGamePage";
 import {ActivitiesPage} from "./pages/ActivitiesPage";
+import {EditInfoPage} from "./pages/EditInfoPage";
+
 
 function App() {
 
@@ -39,6 +41,7 @@ function App() {
                 {path: "/createGame", element: <GameCreationPage currentUser={currentUser} setCurrentUser={setCurrentUser}/>},
                 {path: "/game/:id", element: <GamePage currentUser={currentUser} setCurrentUser={setCurrentUser}/>,},
                 {path: "/editGame/:id", element: <EditGamePage currentUser={currentUser} setCurrentUser={setCurrentUser}/>,},
+                {path: "/editInfo", element: <EditInfoPage currentUser={currentUser} setCurrentUser={setCurrentUser}/>,},
             ]
         },
     ]);
