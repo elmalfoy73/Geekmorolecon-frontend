@@ -43,3 +43,22 @@ export class Game {
         this.type = type;
     }
 }
+
+export class Filters{
+    have_places: boolean | undefined;
+    system: string[] | undefined;
+    date: string[] | undefined;
+    master: string[] | undefined;
+
+    constructor(
+        have_places?: boolean,
+        system?: string[],
+        date?: string[],
+        master?: string[]
+    ) {
+        this.have_places = have_places;
+        this.system = system;
+        this.date = date;
+        this.master = master;
+    }
+}

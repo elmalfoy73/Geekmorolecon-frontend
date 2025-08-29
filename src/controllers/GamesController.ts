@@ -1,10 +1,10 @@
 import {BaseController} from "./BaseController";
-import {Game} from "../model/Game";
+import {Game, Filters} from "../model/Game";
 
 export class GamesController extends BaseController {
-    async getAllGames() {
+    async getAllGames(filters: Filters | undefined) {
         let url = "games";
-        return await this.api<Game[]>(url)
+        return await this.api<Game[]>(url, {filters}, "POST")
     }
 
     async getAllActivities() {
@@ -31,6 +31,11 @@ export class GamesController extends BaseController {
     async updateGame(game: Game) {
         let url = "update-section/"+game.id;
         return await this.api<any>(url, game,"POST")
+    }
+
+    async getGamesByChar(char: String) {
+        let url = "char";
+        return await this.api<any>(url, char, "POST")
     }
 
     async createGame(gameData: FormData) {
