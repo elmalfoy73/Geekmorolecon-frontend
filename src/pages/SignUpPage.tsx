@@ -78,10 +78,15 @@ export function SignUpPage(props: { currentUser: User | undefined; setCurrentUse
             <Card.Root minW="xl">
                 <Center>
                     <Card.Header>
-                        <Card.Title mb="4" fontSize="3xl">
-                        {!ver && Регистрация}
-                        {ver && На ваш адрес электронной почты было выслано письмо с кодом подтверждения}
-                        </Card.Title>
+                        {!ver &&
+                            <Card.Title mb="4" fontSize="3xl">
+                                Регистрация
+                            </Card.Title>
+                        }
+                        {ver && 
+                            <Card.Title mb="4" fontSize="3xl">
+                                На ваш адрес электронной почты было выслано письмо с кодом подтверждения
+                            </Card.Title>}
                     </Card.Header>
                 </Center>
                 {!ver && <Card.Body>
