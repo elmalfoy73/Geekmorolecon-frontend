@@ -11,7 +11,7 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
     const {id} = useParams<{ id: string }>();
     const [error, setError] = useState(false);
     const [game, setGame] = useState<Game>();
-    let navigate = useNavigate()
+    let navigate = useNavigate();
 
     async function fetchGameData() {
         if (!id) return;

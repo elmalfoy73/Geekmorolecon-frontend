@@ -10,15 +10,18 @@ import {useNavigate} from "react-router-dom";
 
 
 export function SignUpPage(props: { currentUser: User | undefined; setCurrentUser: (newPersonData: User) => void; }) {
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [confirmPassword, setConfirmPassword] = useState("")
-    const [name, setName] = useState("")
-    const [contact, setContact] = useState("")
-    let navigate = useNavigate()
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [name, setName] = useState("");
+    const [code, setCode] = useState("");
+    const [enterCode, setEnterCode] = useState("");
+    const [ver, setVer] = useState(false);
+    const [contact, setContact] = useState("");
+    let navigate = useNavigate();
     let [error, setError] = useState<string | null>(null);
     let [passwordMismatch, setPasswordMismatch] = useState(false);
-
+    
     async function handleForm() {
 
         if (password !== confirmPassword) {
@@ -36,19 +39,34 @@ export function SignUpPage(props: { currentUser: User | undefined; setCurrentUse
         } else {
             if (response.exists == true) {
                 setError("Пользователь с таким email уже существует!");
-            }
-            localStorage.setItem("token", response.token)
-            let user = await new UserController().getCurrentUser();
-            if (user instanceof ErrorResponse) {
-                setError("");
             } else {
-                props.setCurrentUser(user.user);
-                console.log(props.currentUser?.name);
-                navigate("/")
+                setCode(response.code)
+                setVer(true)
+            }
+            }
+        }
+
+    async function handleVerification() {
+        if (enterCode == code){
+            let verificationRequest = new SignUpRequest(email, password, name, contact);
+
+            let response = await new AuthController().verification(verificationRequest);
+            if (response instanceof ErrorResponse) {
+                console.log(response.text);
+            } else {
+                localStorage.setItem("token", response.token)
+                let user = await new UserController().getCurrentUser();
+                if (user instanceof ErrorResponse) {
+                    setError("");
+                } else {
+                    props.setCurrentUser(user.user);
+                    console.log(props.currentUser?.name);
+                    navigate("/")
+                }
             }
         }
     }
-
+    
     return (
 
         <Box pt={40} pb={40} px={6}
@@ -60,10 +78,13 @@ export function SignUpPage(props: { currentUser: User | undefined; setCurrentUse
             <Card.Root minW="xl">
                 <Center>
                     <Card.Header>
-                        <Card.Title mb="4" fontSize="3xl">Регистрация</Card.Title>
+                        <Card.Title mb="4" fontSize="3xl">
+                        {!ver && Регистрация}
+                        {ver && На ваш адрес электронной почты было выслано письмо с кодом подтверждения}
+                        </Card.Title>
                     </Card.Header>
                 </Center>
-                <Card.Body>
+                {!ver && <Card.Body>
                     <Stack gap="4" w="full">
                         <Field.Root orientation="horizontal">
                             <Field.Label>Имя</Field.Label>
@@ -93,12 +114,23 @@ export function SignUpPage(props: { currentUser: User | undefined; setCurrentUse
                             {error}
                         </div>}
                     </Stack>
-                </Card.Body>
+                    <div>{ver}</div>
+                </Card.Body>}
                 <Card.Footer justifyContent="flex-end">
+                {!ver && 
                     <Button colorScheme="orange" onClick={handleForm} mt={4}>Зарегистрироваться</Button>
+                }
+                    {ver && <div>
+                        <Field.Root orientation="horizontal">
+                        <PasswordInput value={enterCode}
+                                       onChange={(e) => setEnterCode(e.target.value)}/>
+                        </Field.Root>
+                        <Button colorScheme="orange" onClick={handleVerification} mt={4}>Подтвердить код</Button>
+                        </div>
+                    }
                 </Card.Footer>
             </Card.Root>
                 </Center>
         </Box>
-)
-}
+    
+    )}
