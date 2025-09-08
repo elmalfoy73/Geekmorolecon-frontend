@@ -40,6 +40,11 @@ export function ActivitiesPage(props: { currentUser: User | undefined; setCurren
     bgRepeat="no-repeat"
     bgAttachment="fixed"
     >
+
+    {props.currentUser?.isAdmin && (
+                            <Button colorPalette='orange' asChild mt={4} ml={4}><a href="/createGame">Добавить мероприятие</a></Button>
+    )}
+
     <Heading size="xl" pb={1} color="white">
         Список мероприятий:
         </Heading>

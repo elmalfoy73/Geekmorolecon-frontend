@@ -190,6 +190,10 @@ export function GamesPage(props: { currentUser: User | undefined; setCurrentUser
               </Portal>
             </Menu.Root>
 
+            {props.currentUser?.isAdmin && (
+                        <Button colorPalette='orange' asChild mt={4} ml={4}><a href="/createGame">Добавить мероприятие</a></Button>
+                    )}
+
             <Heading size="7xl" pb={1} color="white">
                 Список партий:
             </Heading>

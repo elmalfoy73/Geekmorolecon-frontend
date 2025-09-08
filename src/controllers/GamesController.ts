@@ -33,6 +33,11 @@ export class GamesController extends BaseController {
         return await this.api<any>(url, game,"POST")
     }
 
+    async delGame(id:string) {
+        let url = "delete-section/"+id;
+        return await this.api<any>(url, id,"POST")
+    }
+
     async getGamesByChar(char: String) {
         let url = "char";
         return await this.api<any>(url, char, "POST")

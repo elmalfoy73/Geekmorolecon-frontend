@@ -32,13 +32,29 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
         fetchGameData();
     }, []);
 
+    async function deleteGame() {
+        if (!id) return;
+        if (!game) return;
+        try {
+            const response = await new GamesController().delGame(game.id)
+            if (response instanceof ErrorResponse) {
+                setError(true);
+            } else {
+                navigate('/games')
+            }
+
+        } catch (err) {
+            setError(true);
+        }
+    }
+
     async function joinGame(id : string) {
         try {
             const response = await new GamesController().joinGame(id)
             if (response instanceof ErrorResponse) {
                 setError(true);
             } else {
-                navigate(`/account`)
+                fetchGameData();
             }
         } catch (err) {
             setError(true);
@@ -52,7 +68,7 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
             if (response instanceof ErrorResponse) {
                 setError(true);
             } else {
-                navigate(`/account`)
+                fetchGameData();
             }
         } catch (err) {
             setError(true);
@@ -108,7 +124,10 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
                                 <Badge colorPalette="red" size="md">Мест нет</Badge>
                             )}
                             {props.currentUser?.isAdmin && (
+                                <div>
                                 <Button colorPalette='orange' onClick={() => navigate(`/editGame/${game.id}`)}>Редактировать партию</Button>
+                                <Button colorPalette='orange' onClick={() => deleteGame()}>Удалить партию</Button>
+                                </div>
                             )}
                         </Card.Footer>
                     </Card.Root>

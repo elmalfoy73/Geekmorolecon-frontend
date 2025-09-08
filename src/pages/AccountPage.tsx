@@ -173,9 +173,7 @@ export function AccountPage(props: {
                         </Portal>
                     </Popover.Root>
                     <Button onClick={signOut} mt={4}>Выйти</Button>
-                    {props.currentUser?.isAdmin && (
-                        <Button colorPalette='orange' asChild mt={4} ml={4}><a href="/createGame">Добавить мероприятие</a></Button>
-                    )}
+                    
                 </Box>
             </Center>
             {games.length > 0 && (
