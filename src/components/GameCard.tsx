@@ -23,7 +23,7 @@ export function GameCard({ game, onClick }: { game: Game; onClick: () => void })
                     <Center><Card.Title mb="2">{game.name}</Card.Title></Center>
                 )}
                 <Card.Description fontSize="3xl">
-                    <Center>{isRPG && (<div><b>{game.master}, {game.masterClub}</b></div>)}</Center>
+                    <Center>{isRPG && (<div><b><a href={game.masterLink} target="_blank">{game.master}</a>, <a href={game.masterClubLink} target="_blank">{game.masterClub}</a></b></div>)}</Center>
                     <Center><div><b>Дата:</b> {game.date}</div></Center>
                     <Center><div><b>Время:</b> {game.time}</div></Center>
                     <Center><div>{game.places} мест, свободно: {game.counter}</div></Center>

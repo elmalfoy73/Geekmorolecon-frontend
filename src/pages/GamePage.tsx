@@ -97,7 +97,7 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
                             )}
                             <Card.Description>
                                 {game.type === "Партия" &&
-                                <div>{game.master}, {game.masterClub}</div> }
+                                <div><a href={game.masterLink} target="_blank">{game.master}</a>, <a href={game.masterClubLink} target="_blank">{game.masterClub}</a></div> }
                                 <div>Дата: {game.date}</div>
                                 <div>Время: {game.time}</div>
                                 <div>{game.description}</div>

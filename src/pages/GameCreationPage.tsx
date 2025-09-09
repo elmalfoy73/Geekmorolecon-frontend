@@ -29,6 +29,8 @@ export function GameCreationPage(props: {
     const [image, setImage] = useState<File | null>(null);
     const [master, setMaster] = useState("")
     const [masterClub, setMasterClub] = useState("")
+    const [masterLink, setMasterLink] = useState("")
+    const [masterClubLink, setMasterClubLink] = useState("")
     const [places, setPlaces] = useState(0)
     const [counter, setCounter] = useState(places)
     const [system, setSystem] = useState("")
@@ -50,6 +52,8 @@ export function GameCreationPage(props: {
             formData.append("type", "Партия");
             formData.append("master", master);
             formData.append("masterClub", masterClub);
+            formData.append("masterLink", masterLink);
+            formData.append("masterClubLink", masterClubLink);
             formData.append("system", system);
         } else {
             formData.append("type", "");
@@ -151,6 +155,14 @@ export function GameCreationPage(props: {
                     <Field.Root orientation="horizontal">
                         <Field.Label>Клуб мастера</Field.Label>
                         <Input value={masterClub} onChange={(e) => setMasterClub(e.target.value)}/>
+                    </Field.Root>
+                    <Field.Root orientation="horizontal">
+                        <Field.Label>Ссылка на мастера</Field.Label>
+                        <Input value={masterLink} onChange={(e) => setMasterLink(e.target.value)}/>
+                    </Field.Root>
+                    <Field.Root orientation="horizontal">
+                        <Field.Label>Ссылка на клуб мастера</Field.Label>
+                        <Input value={masterClubLink} onChange={(e) => setMasterClubLink(e.target.value)}/>
                     </Field.Root>
                     <Field.Root orientation="horizontal">
                         <Field.Label>Тизер</Field.Label>

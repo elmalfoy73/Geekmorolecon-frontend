@@ -6,6 +6,8 @@ export class Game {
     image: string;
     master: string;
     masterClub: string;
+    masterLink: string;
+    masterClubLink: string;
     name: string;
     places: number;
     system: string;
@@ -23,6 +25,8 @@ export class Game {
         image: string,
         master: string,
         masterClub: string,
+        masterLink: string,
+        masterClubLink: string,
         places: number,
         system: string,
         time: string,
@@ -37,6 +41,8 @@ export class Game {
         this.image = image;
         this.master = master;
         this.masterClub = masterClub;
+        this.masterLink = masterLink;
+        this.masterClubLink = masterClubLink;
         this.places = places;
         this.system = system;
         this.time = time;

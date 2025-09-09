@@ -26,6 +26,8 @@ export function EditGamePage(props: { currentUser: User | undefined; setCurrentU
     const [date, setDate] = useState("");
     const [master, setMaster] = useState("");
     const [masterClub, setMasterClub] = useState("");
+    const [masterLink, setMasterLink] = useState("");
+    const [masterClubLink, setMasterClubLink] = useState("");
     const [places, setPlaces] = useState(0);
     const [system, setSystem] = useState("");
     const [time, setTime] = useState("");
@@ -57,6 +59,8 @@ export function EditGamePage(props: { currentUser: User | undefined; setCurrentU
             setTime(game.time);
             setMaster(game.master);
             setMasterClub(game.masterClub);
+            setMasterLink(game.master);
+            setMasterClubLink(game.masterClub);
             setPlaces(game.places);
             setDescription(game.description);
         }
@@ -75,6 +79,8 @@ export function EditGamePage(props: { currentUser: User | undefined; setCurrentU
             game.image,
             master,
             masterClub,
+            masterLink,
+            masterClubLink,
             places,
             system,
             time,
@@ -129,6 +135,14 @@ export function EditGamePage(props: { currentUser: User | undefined; setCurrentU
                             <Field.Root orientation="horizontal">
                                 <Field.Label>Клуб мастера</Field.Label>
                                 <Input value={masterClub} onChange={(e) => setMasterClub(e.target.value)}/>
+                            </Field.Root>
+                            <Field.Root orientation="horizontal">
+                                <Field.Label>Ссылка на мастера</Field.Label>
+                                <Input value={masterLink} onChange={(e) => setMasterLink(e.target.value)}/>
+                            </Field.Root>
+                            <Field.Root orientation="horizontal">
+                                <Field.Label>Ссылка на клуб мастера</Field.Label>
+                                <Input value={masterClubLink} onChange={(e) => setMasterClubLink(e.target.value)}/>
                             </Field.Root>
                             <Field.Root orientation="horizontal">
                                 <Field.Label>Число игроков</Field.Label>
