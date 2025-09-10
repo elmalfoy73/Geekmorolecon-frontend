@@ -1,3 +1,15 @@
+class UserCont{
+    name: string;
+    contact: string
+    constructor(
+        name: string,
+        contact: string
+    ) {
+        this.name = name;
+        this.contact = contact;
+    }
+}
+
 export class Game {
     id: string;
     counter: number;
@@ -12,7 +24,7 @@ export class Game {
     places: number;
     system: string;
     time: string;
-    users: string[];
+    users: UserCont[];
     type: string;
 
     constructor(
@@ -20,7 +32,7 @@ export class Game {
         counter: number,
         description: string,
         name: string,
-        users: string[],
+        users: UserCont[],
         date: string,
         image: string,
         master: string,

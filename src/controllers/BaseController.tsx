@@ -1,6 +1,6 @@
 
-const HOST = process.env.REACT_APP_HOST;
-const PORT = process.env.REACT_APP_PORT;
+const HOST = "localhost";
+const PORT = "5000";
 
 
 export class ErrorResponse {

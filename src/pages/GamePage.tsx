@@ -106,9 +106,10 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
                                 <List.Root px={4}>
                                     {game.users.map((user)=>(
                                         <List.Item>
-                                            {user}
+                                            {user.name}
+                                            {props.currentUser?.isMaster && ("Контакт:"+user.contact+"    ")}
                                             {props.currentUser?.isAdmin && (
-                                            <Button onClick={() => new UserController().deleteFromGame(game.id, user)} color="red">Удалить</Button>)}
+                                            <Button onClick={() => new UserController().deleteFromGame(game.id, user.name)} color="red">Удалить</Button>)}
                                         </List.Item>))}
                                 </List.Root>
                             </Card.Description>
