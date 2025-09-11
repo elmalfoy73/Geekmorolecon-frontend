@@ -4,11 +4,21 @@ import {Badge, Box, Button, ButtonGroup, Image, Stack} from "@chakra-ui/react";
 import {User} from "../model/user/User";
 
 export function Header(props: { currentUser: User | undefined }) {
+
     if (props.currentUser == null) {
-        return <header>
+        return( <header style = {{
+            position: 'sticky',
+            top: '0px',
+            zIndex: '1',
+            paddingTop: '0px',
+            paddingBottom: '0px'
+        }}>
+
+
             <Stack direction='column'>
                 <Box
                     display='flex'
+                    
                     bg='#363836'
                     alignItems='center'
                     justifyContent='space-between'
@@ -27,8 +37,15 @@ export function Header(props: { currentUser: User | undefined }) {
                 </Box>
             </Stack>
         </header>
-    }
-        return <header>
+    )}
+        
+    return (<header style = {{
+            position: 'sticky',
+            top: '0px',
+            zIndex: '1',
+            paddingTop: '0px',
+            paddingBottom: '0px'
+        }}>
             <Stack direction='column'>
                 <Box
                     display='flex'
@@ -44,9 +61,10 @@ export function Header(props: { currentUser: User | undefined }) {
                         <Button asChild><a href="/">Главная</a></Button>
                         <Button asChild><a href="/games">Партии</a></Button>
                         <Button asChild><a href="/activities">Активности</a></Button>
-                        <Button colorPalette='orange' asChild><a href="/account">{props.currentUser?.name}</a></Button>
+                        <Button colorPalette='orange' height='50px' width='125px' asChild><a href="/account">{props.currentUser?.name}</a></Button>
                     </ButtonGroup>
                 </Box>
             </Stack>
         </header>
+    )
 }

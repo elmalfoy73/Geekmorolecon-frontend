@@ -100,35 +100,28 @@ export function GameCreationPage(props: {
                     </Card.Header>
                 </Center>
             <Card.Body>
-                <Stack gap="4" w="full">
-                    <FileUpload.Root  accept={["image/jpeg"]}
-                                      onChange={handleFileChange}>
-                        <FileUpload.HiddenInput/>
-                        <FileUpload.Trigger asChild>
-                            <Button variant="outline" size="sm">
-                                Upload file
-                            </Button>
-                        </FileUpload.Trigger>
-                        <FileUpload.List/>
-                    </FileUpload.Root>
-                    {preview && (
-                        <Image src={preview}/>
-                    )}
+                <Stack gap="4">
+                    
+                    
                     <Field.Root orientation="horizontal">
                         <Field.Label>Название</Field.Label>
                         <Input value={name} onChange={(e) => setName(e.target.value)}/>
                     </Field.Root>
+                    
                     <Field.Root orientation="horizontal">
                         <Field.Label>Дата</Field.Label>
                         <Input placeholder="22.10.2025" ref={withMask("99.10.2025")} value={date} onChange={(e) => setDate(e.target.value)}/>
                     </Field.Root>
+                    
                     <Field.Root orientation="horizontal">
                         <Field.Label>Время</Field.Label>
                         <Input placeholder="15:20" ref={withMask("99:99")} value={time} onChange={(e) => setTime(e.target.value)}/>
                     </Field.Root>
+
                     <Field.Root orientation="horizontal">
                         <Field.Label>Число участников</Field.Label>
                         <NumberInput.Root
+                            left="-250px"
                             value={places}
                             onValueChange={(e: { value: React.SetStateAction<number>; }) => setPlaces(e.value)}
                         >
@@ -136,12 +129,14 @@ export function GameCreationPage(props: {
                             <NumberInput.Input />
                         </NumberInput.Root>
                     </Field.Root>
+                    
                     <Switch.Root checked={isGame}
                                  onCheckedChange={(e: any) => setIsGame(e.checked)}>
                         <Switch.Label>НРИ партия</Switch.Label>
                         <Switch.HiddenInput/>
                         <Switch.Control/>
                     </Switch.Root>
+                    
                     { isGame ? (
                         <Stack gap="4" w="full">
                     <Field.Root orientation="horizontal">
@@ -175,6 +170,20 @@ export function GameCreationPage(props: {
                         <Textarea minH="200px" flex="1" value={description}
                                   onChange={(e) => setDescription(e.target.value)}/>
                     </Field.Root>)}
+
+                <FileUpload.Root  accept={["image/jpeg"]}
+                                      onChange={handleFileChange}>
+                        <FileUpload.HiddenInput/>
+                        <FileUpload.Trigger asChild>
+                            <Button variant="outline" size="md">
+                                Добавить картинку
+                            </Button>
+                        </FileUpload.Trigger>
+                        <FileUpload.List/>
+                    </FileUpload.Root>
+                    {preview && (
+                        <Image src={preview}/>
+                    )}
                 </Stack>
             </Card.Body>
             <Card.Footer justifyContent="flex-end">
