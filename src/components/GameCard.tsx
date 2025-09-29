@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Badge, Card, Image, Center, Stack} from "@chakra-ui/react";
+import {Badge, Card, Image, Center, Stack, Heading, Text} from "@chakra-ui/react";
 import {Game} from "../model/Game";
 
 export function GameCard({ game, onClick }: { game: Game; onClick: () => void }) {
@@ -18,15 +18,15 @@ export function GameCard({ game, onClick }: { game: Game; onClick: () => void })
                 <Image src={game.image} objectFit="contain" w="70em" h="55em" />
                 </Center>
                 {isRPG ? (
-                    <Center><Card.Title mb="2" fontSize = "4xl">«{game.name}»</Card.Title></Center>
+                    <Heading mb="2" fontSize = "4xl" style = {{textAlign: "center"}}>«{game.name}»</Heading>
                 ) : (
-                    <Center><Card.Title mb="2">{game.name}</Card.Title></Center>
+                    <Heading mb="2" style = {{ textAlign: "center"}}>{game.name}</Heading>
                 )}
-                <Card.Description fontSize="3xl">
-                    <Center>{isRPG && (<div><b><a href={game.masterLink} target="_blank">{game.master}</a>, <a href={game.masterClubLink} target="_blank">{game.masterClub}</a></b></div>)}</Center>
-                    <Center><div><b>Дата:</b> {game.date}</div></Center>
-                    <Center><div><b>Время:</b> {game.time}</div></Center>
-                    <Center><div>{game.places} мест, свободно: {game.counter}</div></Center>
+                <Card.Description fontSize="3xl" as="div" textAlign="center">
+                    <div>{isRPG && (<b><a href={game.masterLink} target="_blank">{game.master}</a>, <a href={game.masterClubLink} target="_blank">{game.masterClub}</a></b>)}</div>
+                    <div><b>Дата:</b> {game.date}</div>
+                    <div><b>Время:</b> {game.time}</div>
+                    <div>{game.places} мест, свободно: {game.counter}</div>
                 </Card.Description>
             </Card.Body>
             <Card.Footer justifyContent="flex-end">

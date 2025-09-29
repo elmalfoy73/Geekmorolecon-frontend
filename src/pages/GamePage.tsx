@@ -9,7 +9,7 @@ import {UserController} from "../controllers/UserController";
 
 export function GamePage(props: { currentUser: User | undefined; setCurrentUser: (newPersonData: User) => void; }) {
     const {id} = useParams<{ id: string }>();
-    const [error, setError] = useState(false);
+    const [error, setError] = useState("");
     const [game, setGame] = useState<Game>();
     let navigate = useNavigate();
 
@@ -18,13 +18,13 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
         try {
             const response = await new GamesController().getGame(id)
             if (response instanceof ErrorResponse) {
-                setError(true);
+                setError("");
             } else {
                 setGame(response)
             }
 
         } catch (err) {
-            setError(true);
+            setError("");
         }
     }
 
@@ -38,26 +38,29 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
         try {
             const response = await new GamesController().delGame(game.id)
             if (response instanceof ErrorResponse) {
-                setError(true);
+                setError("");
             } else {
                 navigate('/games')
             }
 
         } catch (err) {
-            setError(true);
+            setError("");
         }
     }
 
     async function joinGame(id : string) {
         try {
             const response = await new GamesController().joinGame(id)
+            console.log(response)
             if (response instanceof ErrorResponse) {
-                setError(true);
+                setError("");
+            } else if(response == "Cross"){
+                setError("Вы не можете записаться на эту партию, так как в таком случае в вашем расписании партий образутся пересечение!")
             } else {
                 fetchGameData();
             }
         } catch (err) {
-            setError(true);
+            setError("");
             console.error("Ошибка при записи", err);
         }
     }
@@ -66,12 +69,12 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
         try {
             const response = await new GamesController().leaveGame(id)
             if (response instanceof ErrorResponse) {
-                setError(true);
+                setError("");
             } else {
                 fetchGameData();
             }
         } catch (err) {
-            setError(true);
+            setError("");
             console.error("Ошибка при отписке", err);
         }
     }
@@ -89,13 +92,13 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
                 <div>
                     <Card.Root maxW="xl" overflow="hidden">
                         <Image src={game.image}/>
-                        <Card.Body gap="2">
+                        <Card.Body gap="2" as="div">
                             {game.type === "Партия" ? (
                                 <Card.Title mb="2">{game.system} «{game.name}»</Card.Title>
                             ) : (
                                 <Card.Title mb="2">{game.name}</Card.Title>
                             )}
-                            <Card.Description>
+                            <Card.Description as="div">
                                 {game.type === "Партия" &&
                                 <div><a href={game.masterLink} target="_blank">{game.master}</a>, <a href={game.masterClubLink} target="_blank">{game.masterClub}</a></div> }
                                 <div>Дата: {game.date}</div>
@@ -105,7 +108,7 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
                                 <div>Записаны: </div>
                                 <List.Root px={4}>
                                     {game.users.map((user)=>(
-                                        <List.Item>
+                                        <List.Item key={user.name}>
                                             {user.name}
                                             {props.currentUser?.isMaster && ("Контакт:"+user.contact+"    ")}
                                             {props.currentUser?.isAdmin && (
@@ -113,14 +116,20 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
                                         </List.Item>))}
                                 </List.Root>
                             </Card.Description>
+                                <>
+                                    {error && <span className="errorMessage" style={{color: "red"}}>
+                                        {error}
+                                    </span>}
+                                </>
                         </Card.Body>
-                        <Card.Footer justifyContent="flex-end">
+
+                        <Card.Footer justifyContent="flex-end" as="div">
                             {game.counter > 0 ? (
                                 props.currentUser ? (props.currentUser.sections.includes(game.id) ? (
                                     <Button onClick={() => leaveGame(game.id)}>Отменить запись</Button>
                                 ) : (
-                                    <Button onClick={() => joinGame(game.id)}>Записаться на партию</Button>
-                                )) : (<Badge size="md">Войдите в аккаунт для записи</Badge>)
+                                        <Button onClick={() => joinGame(game.id)}>Записаться на партию</Button>
+                                )) : (<Button onClick={() => navigate("/signIn")} size="md">Войдите в аккаунт для записи</Button>)
                             ) : (
                                 <Badge colorPalette="red" size="md">Мест нет</Badge>
                             )}
@@ -139,3 +148,5 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
 )
     ;
 }
+
+
