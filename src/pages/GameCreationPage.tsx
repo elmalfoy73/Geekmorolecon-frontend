@@ -36,6 +36,8 @@ export function GameCreationPage(props: {
     const [system, setSystem] = useState("")
     const [time, setTime] = useState("")
     const [isGame, setIsGame] = useState(false)
+    const [postDate, setPostDate] = useState("")
+    const [postTime, setPostTime] = useState("")
     const [preview, setPreview] = useState<string | null>(null);
     let navigate = useNavigate()
 
@@ -47,6 +49,8 @@ export function GameCreationPage(props: {
         formData.append("date", date);
         formData.append("places", places.toString());
         formData.append("time", time);
+        formData.append("postDate", postDate);
+        formData.append("postTime", postTime);
 
         if(isGame) {
             formData.append("type", "Партия");
@@ -116,6 +120,16 @@ export function GameCreationPage(props: {
                     <Field.Root orientation="horizontal">
                         <Field.Label>Время</Field.Label>
                         <Input placeholder="15:20" ref={withMask("99:99")} value={time} onChange={(e) => setTime(e.target.value)}/>
+                    </Field.Root>
+                    
+                    <Field.Root orientation="horizontal">
+                        <Field.Label>Дата публикации</Field.Label>
+                        <Input placeholder="22.11.2025" ref={withMask("99.10.2025")} value={postDate} onChange={(e) => setPostDate(e.target.value)}/>
+                    </Field.Root>
+
+                    <Field.Root orientation="horizontal">
+                        <Field.Label>Время публикации</Field.Label>
+                        <Input placeholder="15:20" ref={withMask("99:99")} value={postTime} onChange={(e) => setPostTime(e.target.value)}/>
                     </Field.Root>
 
                     <Field.Root orientation="horizontal">

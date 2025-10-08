@@ -14,6 +14,7 @@ export class Game {
     id: string;
     counter: number;
     date: string;
+    postDate: string;
     description: string;
     image: string;
     master: string;
@@ -24,6 +25,7 @@ export class Game {
     places: number;
     system: string;
     time: string;
+    postTime: string;
     users: UserCont[];
     type: string;
 
@@ -34,6 +36,7 @@ export class Game {
         name: string,
         users: UserCont[],
         date: string,
+        postDate: string,
         image: string,
         master: string,
         masterClub: string,
@@ -42,6 +45,7 @@ export class Game {
         places: number,
         system: string,
         time: string,
+        postTime: string,
         type: string
 ) {
         this.id = id;
@@ -50,6 +54,7 @@ export class Game {
         this.name = name;
         this.users = users;
         this.date = date;
+        this.postDate = date;
         this.image = image;
         this.master = master;
         this.masterClub = masterClub;
@@ -58,6 +63,7 @@ export class Game {
         this.places = places;
         this.system = system;
         this.time = time;
+        this.postTime = time;
         this.type = type;
     }
 }

@@ -31,6 +31,8 @@ export function EditGamePage(props: { currentUser: User | undefined; setCurrentU
     const [places, setPlaces] = useState(0);
     const [system, setSystem] = useState("");
     const [time, setTime] = useState("");
+    const [postDate, setPostDate] = useState("");
+    const [postTime, setPostTime] = useState("");
 
     async function fetchGameData() {
         if (!id) return;
@@ -57,6 +59,8 @@ export function EditGamePage(props: { currentUser: User | undefined; setCurrentU
             setSystem(game.system);
             setDate(game.date);
             setTime(game.time);
+            setPostDate(game.postDate);
+            setPostTime(game.postTime);
             setMaster(game.master);
             setMasterClub(game.masterClub);
             setMasterLink(game.master);
@@ -76,6 +80,7 @@ export function EditGamePage(props: { currentUser: User | undefined; setCurrentU
             name,
             game.users,
             date,
+            postDate,
             game.image,
             master,
             masterClub,
@@ -84,6 +89,7 @@ export function EditGamePage(props: { currentUser: User | undefined; setCurrentU
             places,
             system,
             time,
+            postTime,
             game.type
         );
 
@@ -127,6 +133,15 @@ export function EditGamePage(props: { currentUser: User | undefined; setCurrentU
                             <Field.Root orientation="horizontal">
                                 <Field.Label>Время</Field.Label>
                                 <Input value={time} onChange={(e) => setTime(e.target.value)}/>
+                            </Field.Root>
+                            <Field.Root orientation="horizontal">
+                                <Field.Label>Дата публикации</Field.Label>
+                                <Input value={postDate} onChange={(e) => setPostDate(e.target.value)}/>
+                            </Field.Root>
+
+                            <Field.Root orientation="horizontal">
+                                <Field.Label>Время публикации</Field.Label>
+                                <Input value={postTime} onChange={(e) => setPostTime(e.target.value)}/>
                             </Field.Root>
                             <Field.Root orientation="horizontal">
                                 <Field.Label>Мастер</Field.Label>
