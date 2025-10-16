@@ -7,6 +7,7 @@ import {ErrorResponse} from "../controllers/BaseController";
 import {UserController} from "../controllers/UserController";
 import {User} from "../model/user/User";
 import {useNavigate} from "react-router-dom";
+import {sha256} from "js-sha256"
 
 
 export function SignUpPage(props: { currentUser: User | undefined; setCurrentUser: (newPersonData: User) => void; }) {
@@ -105,7 +106,7 @@ export function SignUpPage(props: { currentUser: User | undefined; setCurrentUse
                     </Field.Root>
                         <Field.Root orientation="horizontal">
                             <Field.Label>Пароль</Field.Label>
-                            <PasswordInput value={password} onChange={(e) => setPassword(e.target.value)}/>
+                            <PasswordInput value={password} onChange={(e) => setPassword(sha256(e.target.value))}/>
                         </Field.Root>
                         <Field.Root orientation="horizontal">
                             <Field.Label>Повторите пароль</Field.Label>

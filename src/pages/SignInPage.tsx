@@ -7,6 +7,7 @@ import {SignInRequest} from "../model/user/auth/SignInRequest";
 import {UserController} from "../controllers/UserController";
 import {User} from "../model/user/User";
 import {useNavigate} from "react-router-dom";
+import {sha256} from "js-sha256";
 
 
 export function SignInPage(props: { currentUser: User | undefined; setCurrentUser: (newPersonData: User) => void; }) {
@@ -65,7 +66,7 @@ export function SignInPage(props: { currentUser: User | undefined; setCurrentUse
 
                         <Field.Root orientation="horizontal">
                             <Field.Label fontSize="1em">Пароль</Field.Label>
-                            <PasswordInput value={password} onChange={(e) => setPassword(e.target.value)}/>
+                            <PasswordInput value={password} onChange={(e) => setPassword(sha256(e.target.value))}/>
                         </Field.Root>
                         {error && <div className="errorMessage" style={{color: "red"}}>
                             {error}
