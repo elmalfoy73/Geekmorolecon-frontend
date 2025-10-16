@@ -15,7 +15,7 @@ export class BaseController {
 
 
     async api<T>(url: string, body: any = null, method: string = "GET", host: string | undefined = HOST, port: string | undefined = PORT): Promise<T | ErrorResponse> {
-        let response = await this.request("http://"+host+":"+port+"/api/" + url, body, method)
+        let response = await this.request("/api/" + url, body, method)
         let text = await response.text();
         if (text == ""){
             text = "{}"
