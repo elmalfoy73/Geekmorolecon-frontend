@@ -32,7 +32,7 @@ export function SignUpPage(props: { currentUser: User | undefined; setCurrentUse
             setPasswordMismatch(false);
         }
 
-        let signUpRequest = new SignUpRequest(email, password, name, contact);
+        let signUpRequest = new SignUpRequest(email, sha256(password), name, contact);
 
         let response = await new AuthController().signUp(signUpRequest);
         if (response instanceof ErrorResponse) {
@@ -106,7 +106,7 @@ export function SignUpPage(props: { currentUser: User | undefined; setCurrentUse
                     </Field.Root>
                         <Field.Root orientation="horizontal">
                             <Field.Label>Пароль</Field.Label>
-                            <PasswordInput value={password} onChange={(e) => setPassword(sha256(e.target.value))}/>
+                            <PasswordInput value={password} onChange={(e) => setPassword(e.target.value)}/>
                         </Field.Root>
                         <Field.Root orientation="horizontal">
                             <Field.Label>Повторите пароль</Field.Label>

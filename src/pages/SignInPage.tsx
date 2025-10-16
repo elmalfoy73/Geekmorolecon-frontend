@@ -18,7 +18,7 @@ export function SignInPage(props: { currentUser: User | undefined; setCurrentUse
 
     async function handleForm() {
 
-        let signInRequest = new SignInRequest(email, password);
+        let signInRequest = new SignInRequest(email, sha256(password));
 
         let response = await new AuthController().signIn(signInRequest);
         if (response instanceof ErrorResponse) {
@@ -66,7 +66,7 @@ export function SignInPage(props: { currentUser: User | undefined; setCurrentUse
 
                         <Field.Root orientation="horizontal">
                             <Field.Label fontSize="1em">Пароль</Field.Label>
-                            <PasswordInput value={password} onChange={(e) => setPassword(sha256(e.target.value))}/>
+                            <PasswordInput value={password} onChange={(e) => setPassword(e.target.value)}/>
                         </Field.Root>
                         {error && <div className="errorMessage" style={{color: "red"}}>
                             {error}
