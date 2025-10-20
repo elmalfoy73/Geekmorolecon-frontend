@@ -2,7 +2,7 @@ import {User} from "../model/user/User";
 import {useNavigate, useParams} from "react-router-dom";
 import {GamesController} from "../controllers/GamesController";
 import {ErrorResponse} from "../controllers/BaseController";
-import React, {useEffect, useState, ReactNode} from "react";
+import React, {useEffect, useState} from "react";
 import {Game} from "../model/Game";
 import {Badge, Box, Button, Card, Center, Heading, Image, List, Stack} from "@chakra-ui/react";
 import {UserController} from "../controllers/UserController";
@@ -11,7 +11,7 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
     const {id} = useParams<{ id: string }>();
     const [error, setError] = useState("");
     const [game, setGame] = useState<Game>();
-    const [btn, setBtn] = useState<ReactNode>(<Button>Не загрузилось</Button>);
+    const [joined, setJoined] = useState(false);
     let navigate = useNavigate();
 
     async function fetchGameData() {
@@ -28,23 +28,15 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
             setError("");
         }
     }
-    async function btnReload() {
-        if (!game) return;
-
-        if (props.currentUser && game.id in props.currentUser.sections) {
-            setBtn(<Button onClick={() => leaveGame(game.id)}>Отписаться</Button>);
-        } else {
-            setBtn(<Button onClick={() => joinGame(game.id)}>Записаться</Button>);
-        }
-    }
 
     useEffect(() => {
         fetchGameData();
     }, []);
-
     useEffect(() => {
-        btnReload()
-}, [game, props.currentUser]);
+        if (game && props.currentUser) {
+            setJoined(props.currentUser.sections.includes(game.id));
+        }
+    }, []);
 
     async function deleteGame() {
         if (!id) return;
@@ -71,8 +63,8 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
             } else if(response == "Cross"){
                 setError("Вы не можете записаться на эту партию, так как в таком случае в вашем расписании партий образутся пересечение!")
             } else{
+                setJoined(true);
                 fetchGameData();
-                btnReload();
             }
         } catch (err) {
             setError("");
@@ -86,8 +78,8 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
             if (response instanceof ErrorResponse) {
                 setError("");
             } else{
+                setJoined(false);
                 fetchGameData();
-                btnReload();
             }
         } catch (err) {
             setError("");
@@ -143,7 +135,11 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
                         <Stack>
                             {game.counter > 0 ? (
                                 props.currentUser ? (
-                                    <>{btn}</>
+                                    joined ? (
+                                    <Button onClick={() => leaveGame(game.id)}>Отписаться</Button>
+                                ) : (
+                                    <Button onClick={() =>joinGame(game.id)}>Записаться</Button>
+                                )
                                 ) : (
                                 <Button onClick={() => navigate("/signIn")} size="md">Войдите в аккаунт для записи</Button>)
                             ) : (
