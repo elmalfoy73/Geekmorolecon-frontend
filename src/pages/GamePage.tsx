@@ -31,12 +31,17 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
 
     useEffect(() => {
         fetchGameData();
-        if (game && props.currentUser && game.id in props.currentUser.sections){
-            setBtn(<Button onClick={() => leaveGame(game.id)}>Отписаться</Button>);
-        } else if (game){
-            setBtn(<Button onClick={() => joinGame(game.id)}>Записаться</Button>);
-        };
     }, []);
+
+    useEffect(() => {
+    if (!game) return;
+
+    if (props.currentUser && game.id in props.currentUser.sections) {
+        setBtn(<Button onClick={() => leaveGame(game.id)}>Отписаться</Button>);
+    } else {
+        setBtn(<Button onClick={() => joinGame(game.id)}>Записаться</Button>);
+    }
+}, [game, props.currentUser]);
 
     async function deleteGame() {
         if (!id) return;
