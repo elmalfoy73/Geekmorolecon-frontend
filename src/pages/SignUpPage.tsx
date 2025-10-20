@@ -128,7 +128,7 @@ export function SignUpPage(props: { currentUser: User | undefined; setCurrentUse
                 }
                     {ver && <div>
                         <Field.Root orientation="horizontal">
-                        <PasswordInput value={enterCode}
+                        <Input value={enterCode}
                                        onChange={(e) => setEnterCode(e.target.value)}/>
                         </Field.Root>
                         <Button colorScheme="orange" onClick={handleVerification} mt={4}>Подтвердить код</Button>

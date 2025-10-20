@@ -11,6 +11,9 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
     const {id} = useParams<{ id: string }>();
     const [error, setError] = useState("");
     const [game, setGame] = useState<Game>();
+    const [btn, setBtn] = useState<ReactNode>(
+        <Button onClick={() => joinGame(game.id)}>Записаться</Button>
+    );
     let navigate = useNavigate();
 
     async function fetchGameData() {
@@ -58,6 +61,7 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
                 setError("Вы не можете записаться на эту партию, так как в таком случае в вашем расписании партий образутся пересечение!")
             } else {
                 fetchGameData();
+                setBtn(<Button onClick={() => leaveGame(game.id)}>Отписаться</Button>);
             }
         } catch (err) {
             setError("");
@@ -72,6 +76,7 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
                 setError("");
             } else {
                 fetchGameData();
+                setBtn(<Button onClick={() => joinGame(game.id)}>Записаться</Button>);
             }
         } catch (err) {
             setError("");
@@ -125,11 +130,10 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
 
                         <Card.Footer justifyContent="flex-end" as="div">
                             {game.counter > 0 ? (
-                                props.currentUser ? (props.currentUser.sections.includes(game.id) ? (
-                                    <Button onClick={() => leaveGame(game.id)}>Отменить запись</Button>
+                                props.currentUser ? (
+                                    {btn}
                                 ) : (
-                                        <Button onClick={() => joinGame(game.id)}>Записаться на партию</Button>
-                                )) : (<Button onClick={() => navigate("/signIn")} size="md">Войдите в аккаунт для записи</Button>)
+                                <Button onClick={() => navigate("/signIn")} size="md">Войдите в аккаунт для записи</Button>)
                             ) : (
                                 <Badge colorPalette="red" size="md">Мест нет</Badge>
                             )}
