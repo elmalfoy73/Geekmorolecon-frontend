@@ -49,7 +49,7 @@ export function SignUpPage(props: { currentUser: User | undefined; setCurrentUse
 
     async function handleVerification() {
         if (enterCode == code){
-            let verificationRequest = new SignUpRequest(email, password, name, contact);
+            let verificationRequest = new SignUpRequest(email, sha256(password), name, contact);
 
             let response = await new AuthController().verification(verificationRequest);
             if (response instanceof ErrorResponse) {
@@ -86,7 +86,7 @@ export function SignUpPage(props: { currentUser: User | undefined; setCurrentUse
                         }
                         {ver && 
                             <Card.Title mb="4" fontSize="3xl">
-                                На ваш адрес электронной почты было выслано письмо с кодом подтверждения
+                                На ваш адрес электронной почты было выслано письмо с кодом подтверждения. Проверьте папку спам!
                             </Card.Title>}
                     </Card.Header>
                 </Center>

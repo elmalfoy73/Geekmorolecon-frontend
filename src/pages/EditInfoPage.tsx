@@ -4,6 +4,7 @@ import {InfoController} from "../controllers/InfoController";
 import {ErrorResponse} from "../controllers/BaseController";
 import {Info} from "../model/Info"
 import React, {useEffect, useState} from "react";
+import sha256 from "js-sha256";
 import {
     Box,
     Button,
