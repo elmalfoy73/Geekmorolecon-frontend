@@ -33,7 +33,8 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
     }, []);
 
     const [btn, setBtn] = useState<ReactNode>(
-        <Button onClick={() => joinGame(game.id)}>Записаться</Button>
+        if (game){
+        <Button onClick={() => joinGame(game.id)}>Записаться</Button>}
     );
 
     async function deleteGame() {
