@@ -11,7 +11,7 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
     const {id} = useParams<{ id: string }>();
     const [error, setError] = useState("");
     const [game, setGame] = useState<Game>();
-    const [btn, setBtn] = useState<ReactNode>();
+    const [btn, setBtn] = useState<ReactNode>(<Button>Не загрузилось</Button>);
     let navigate = useNavigate();
 
     async function fetchGameData() {
