@@ -22,7 +22,11 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
                 setError("");
             } else {
                 setGame(response);
-                setBtn(<Button onClick={() => joinGame(response.id)}>Записаться</Button>);
+                if (props.currentUser && response.id in props.currentUser.sections){
+                    setBtn(<Button onClick={() => leaveGame(response.id)}>Отписаться</Button>);
+                } else{
+                    setBtn(<Button onClick={() => joinGame(response.id)}>Записаться</Button>);
+                }
             }
 
         } catch (err) {
