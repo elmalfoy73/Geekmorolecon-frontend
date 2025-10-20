@@ -2,7 +2,7 @@ import {User} from "../model/user/User";
 import {useNavigate, useParams} from "react-router-dom";
 import {GamesController} from "../controllers/GamesController";
 import {ErrorResponse} from "../controllers/BaseController";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, ReactNode} from "react";
 import {Game} from "../model/Game";
 import {Badge, Box, Button, Card, Center, Heading, Image, List, Stack} from "@chakra-ui/react";
 import {UserController} from "../controllers/UserController";
