@@ -11,6 +11,7 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
     const {id} = useParams<{ id: string }>();
     const [error, setError] = useState("");
     const [game, setGame] = useState<Game>();
+    const [btn, setBtn] = useState<ReactNode>();
     let navigate = useNavigate();
 
     async function fetchGameData() {
@@ -20,7 +21,10 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
             if (response instanceof ErrorResponse) {
                 setError("");
             } else {
-                setGame(response)
+                setGame(response);
+                if (game){
+                setBtn(<Button onClick={() => joinGame(game.id)}>Записаться</Button>);
+                }
             }
 
         } catch (err) {
@@ -31,11 +35,6 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
     useEffect(() => {
         fetchGameData();
     }, []);
-
-    const [btn, setBtn] = useState<ReactNode>(
-        if (game){
-        <Button onClick={() => joinGame(game.id)}>Записаться</Button>}
-    );
 
     async function deleteGame() {
         if (!id) return;
@@ -61,7 +60,7 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
                 setError("");
             } else if(response == "Cross"){
                 setError("Вы не можете записаться на эту партию, так как в таком случае в вашем расписании партий образутся пересечение!")
-            } else {
+            } else if(game){
                 fetchGameData();
                 setBtn(<Button onClick={() => leaveGame(game.id)}>Отписаться</Button>);
             }
@@ -76,7 +75,7 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
             const response = await new GamesController().leaveGame(id)
             if (response instanceof ErrorResponse) {
                 setError("");
-            } else {
+            } else if (game){
                 fetchGameData();
                 setBtn(<Button onClick={() => joinGame(game.id)}>Записаться</Button>);
             }
@@ -131,9 +130,10 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
                         </Card.Body>
 
                         <Card.Footer justifyContent="flex-end" as="div">
+                        <Stack>
                             {game.counter > 0 ? (
                                 props.currentUser ? (
-                                    {btn}
+                                    <>{btn}</>
                                 ) : (
                                 <Button onClick={() => navigate("/signIn")} size="md">Войдите в аккаунт для записи</Button>)
                             ) : (
@@ -145,6 +145,8 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
                                 <Button colorPalette='orange' onClick={() => deleteGame()}>Удалить партию</Button>
                                 </div>
                             )}
+                        </Stack>
+                        
                         </Card.Footer>
                     </Card.Root>
                 </div>
