@@ -28,19 +28,22 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
             setError("");
         }
     }
+    async function btnReload() {
+        if (!game) return;
+
+        if (props.currentUser && game.id in props.currentUser.sections) {
+            setBtn(<Button onClick={() => leaveGame(game.id)}>Отписаться</Button>);
+        } else {
+            setBtn(<Button onClick={() => joinGame(game.id)}>Записаться</Button>);
+        }
+    }
 
     useEffect(() => {
         fetchGameData();
     }, []);
 
     useEffect(() => {
-    if (!game) return;
-
-    if (props.currentUser && game.id in props.currentUser.sections) {
-        setBtn(<Button onClick={() => leaveGame(game.id)}>Отписаться</Button>);
-    } else {
-        setBtn(<Button onClick={() => joinGame(game.id)}>Записаться</Button>);
-    }
+        btnReload()
 }, [game, props.currentUser]);
 
     async function deleteGame() {
@@ -69,6 +72,7 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
                 setError("Вы не можете записаться на эту партию, так как в таком случае в вашем расписании партий образутся пересечение!")
             } else{
                 fetchGameData();
+                btnReload();
             }
         } catch (err) {
             setError("");
@@ -83,6 +87,7 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
                 setError("");
             } else{
                 fetchGameData();
+                btnReload();
             }
         } catch (err) {
             setError("");
