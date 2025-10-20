@@ -22,12 +22,6 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
                 setError("");
             } else {
                 setGame(response);
-                console.log(props.currentUser)
-                if (props.currentUser && response.id in props.currentUser.sections){
-                    setBtn(<Button onClick={() => leaveGame(response.id)}>Отписаться</Button>);
-                } else{
-                    setBtn(<Button onClick={() => joinGame(response.id)}>Записаться</Button>);
-                }
             }
 
         } catch (err) {
@@ -37,6 +31,11 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
 
     useEffect(() => {
         fetchGameData();
+        if (game && props.currentUser && game.id in props.currentUser.sections){
+            setBtn(<Button onClick={() => leaveGame(game.id)}>Отписаться</Button>);
+        } else if (game){
+            setBtn(<Button onClick={() => joinGame(game.id)}>Записаться</Button>);
+        };
     }, []);
 
     async function deleteGame() {
@@ -65,7 +64,6 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
                 setError("Вы не можете записаться на эту партию, так как в таком случае в вашем расписании партий образутся пересечение!")
             } else{
                 fetchGameData();
-                setBtn(<Button onClick={() => leaveGame(response.id)}>Отписаться</Button>);
             }
         } catch (err) {
             setError("");
@@ -80,7 +78,6 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
                 setError("");
             } else{
                 fetchGameData();
-                setBtn(<Button onClick={() => joinGame(response.id)}>Записаться</Button>);
             }
         } catch (err) {
             setError("");
