@@ -11,9 +11,6 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
     const {id} = useParams<{ id: string }>();
     const [error, setError] = useState("");
     const [game, setGame] = useState<Game>();
-    const [btn, setBtn] = useState<ReactNode>(
-        <Button onClick={() => joinGame(game.id)}>Записаться</Button>
-    );
     let navigate = useNavigate();
 
     async function fetchGameData() {
@@ -34,6 +31,10 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
     useEffect(() => {
         fetchGameData();
     }, []);
+
+    const [btn, setBtn] = useState<ReactNode>(
+        <Button onClick={() => joinGame(game.id)}>Записаться</Button>
+    );
 
     async function deleteGame() {
         if (!id) return;
