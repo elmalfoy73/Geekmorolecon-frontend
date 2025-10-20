@@ -22,9 +22,7 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
                 setError("");
             } else {
                 setGame(response);
-                if (game){
-                setBtn(<Button onClick={() => joinGame(game.id)}>Записаться</Button>);
-                }
+                setBtn(<Button onClick={() => joinGame(response.id)}>Записаться</Button>);
             }
 
         } catch (err) {
@@ -60,9 +58,9 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
                 setError("");
             } else if(response == "Cross"){
                 setError("Вы не можете записаться на эту партию, так как в таком случае в вашем расписании партий образутся пересечение!")
-            } else if(game){
+            } else{
                 fetchGameData();
-                setBtn(<Button onClick={() => leaveGame(game.id)}>Отписаться</Button>);
+                setBtn(<Button onClick={() => leaveGame(response.id)}>Отписаться</Button>);
             }
         } catch (err) {
             setError("");
@@ -75,9 +73,9 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
             const response = await new GamesController().leaveGame(id)
             if (response instanceof ErrorResponse) {
                 setError("");
-            } else if (game){
+            } else{
                 fetchGameData();
-                setBtn(<Button onClick={() => joinGame(game.id)}>Записаться</Button>);
+                setBtn(<Button onClick={() => joinGame(response.id)}>Записаться</Button>);
             }
         } catch (err) {
             setError("");
