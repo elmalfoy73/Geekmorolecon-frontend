@@ -1,12 +1,15 @@
 class UserCont{
     name: string;
-    contact: string
+    contact: string;
+    id: string;
     constructor(
         name: string,
-        contact: string
+        contact: string,
+        id: string
     ) {
         this.name = name;
         this.contact = contact;
+        this.id = id;
     }
 }
 

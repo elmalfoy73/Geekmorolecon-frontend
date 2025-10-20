@@ -22,6 +22,7 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
                 setError("");
             } else {
                 setGame(response);
+                console.log(props.currentUser)
                 if (props.currentUser && response.id in props.currentUser.sections){
                     setBtn(<Button onClick={() => leaveGame(response.id)}>Отписаться</Button>);
                 } else{
