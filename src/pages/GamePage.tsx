@@ -33,9 +33,9 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
         fetchGameData();
     }, []);
     useEffect(() => {
-        if (game && props.currentUser) {
-            setJoined(props.currentUser.sections.includes(game.id));
-        }
+        if (!game) return;
+        console.log(game.id);
+        setJoined(props.currentUser?.sections.includes(game.id) ?? false);
     }, []);
 
     async function deleteGame() {

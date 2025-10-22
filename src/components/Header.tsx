@@ -1,6 +1,6 @@
 import React from "react";
 import {NavLink} from "react-router-dom";
-import {Badge, Box, Button, ButtonGroup, Image, Stack} from "@chakra-ui/react";
+import {Badge, Box, Button, ButtonGroup, Image, Stack, Link} from "@chakra-ui/react";
 import {User} from "../model/user/User";
 
 export function Header(props: { currentUser: User | undefined }) {
@@ -56,7 +56,9 @@ export function Header(props: { currentUser: User | undefined }) {
                     py={6}
                     px={6}
                 >
+                <Link href="/">
                     <Image rounded="lg" h="60px" src="roleconLogo.png"/>
+                </Link>
                     <ButtonGroup gap='4'>
                         <Button asChild><a href="/">Главная</a></Button>
                         <Button asChild><a href="/games">Партии</a></Button>

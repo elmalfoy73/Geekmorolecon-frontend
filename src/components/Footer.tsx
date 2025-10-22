@@ -20,7 +20,7 @@ export function Footer() {
                 <Link href="https://vk.com/geekmo?from=groups">
                     <Image h="50px" src="GEEKMO_Logo.png"/>
                 </Link>
-                <a aria-current="page" href="/" className="router-link-active router-link-exact-active">
+                <a aria-current="page" href="https://itmo.events/events/114706" className="router-link-active router-link-exact-active">
                     <svg xmlns="http://www.w3.org/2000/svg" width="196" height="24" fill="none">
                         <path fill="#000"
                               d="M85.179 14.883c-.01-3.428-1.4-5.986-4.134-7.603-1.466-.865-3.128-1.249-4.802-1.24-1.674-.013-3.336.372-4.8 1.237-2.737 1.617-4.124 4.174-4.134 7.602.01 3.428 1.398 5.986 4.134 7.604 1.422.839 3.035 1.232 4.674 1.241h.257c1.636-.009 3.25-.402 4.674-1.241 2.736-1.618 4.124-4.176 4.134-7.604zm-5.725 3.386c-.792.824-1.888 1.254-3.18 1.256h-.057c-1.29 0-2.389-.436-3.18-1.256s-1.232-2.028-1.227-3.386.427-2.558 1.228-3.386 1.887-1.255 3.179-1.256h.062c1.288 0 2.388.436 3.178 1.256.791.82 1.234 2.029 1.228 3.386-.005 1.357-.432 2.558-1.233 3.387zM22.291 6.234v4.205h6.284v13.136h4.6V10.44h6.4V6.234zM20.806 6.195h-4.642v17.377h4.642zM4.642 6.195H0v17.377h4.642z"></path>
