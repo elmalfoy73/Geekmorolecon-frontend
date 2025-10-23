@@ -51,12 +51,17 @@ export function ActivitiesPage(props: { currentUser: User | undefined; setCurren
     {error && <div>Произошла ошибка при загрузке мероприятий.</div>}
 
         {games.length > 0 ? (
-                <Box
-                    display="grid"
-            gridTemplateColumns="repeat(3, 1fr)"
-            gap={6}
-            mt={4}
-                >
+            <Box
+                display="grid"
+                gap={6}
+                mt={6}
+                mb={6}
+                gridTemplateColumns={{
+                    base: "1fr",      // на маленьких экранах — 1 карточка в ряд
+                    sm: "repeat(2, 1fr)", // на средних экранах — 2 карточки
+                    md: "repeat(3, 1fr)", // на больших — 3 карточки
+                }}
+            >
                 {games.map((game) => (
                         <GameCard
                             key={game.id}
@@ -65,6 +70,7 @@ export function ActivitiesPage(props: { currentUser: User | undefined; setCurren
             />
         ))}
             </Box>
+
         ) : (
             <Box mt={4}>
             <Heading size="md" pb={1} color="white">Партий нет(</Heading>

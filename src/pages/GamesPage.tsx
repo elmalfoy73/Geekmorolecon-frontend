@@ -1,81 +1,66 @@
-import {GamesController} from "../controllers/GamesController";
-import React, {useEffect, useState} from "react";
-import {ErrorResponse} from "../controllers/BaseController";
-import {Badge, Box, Button, Card, For, Heading, Image, List, ListItem, Stack, CheckboxCard, Menu, Portal, useCheckboxGroup} from "@chakra-ui/react";
-import {Game, Filters} from "../model/Game";
-import {User} from "../model/user/User";
-import {useNavigate} from "react-router-dom";
-import {GameCard} from "../components/GameCard";
+import { GamesController } from "../controllers/GamesController";
+import React, { useEffect, useState } from "react";
+import { ErrorResponse } from "../controllers/BaseController";
+import {
+    Box,
+    Button,
+    Heading,
+} from "@chakra-ui/react";
+import { Game, Filters } from "../model/Game";
+import { User } from "../model/user/User";
+import { useNavigate } from "react-router-dom";
+import { GameCard } from "../components/GameCard";
+import { GameFilters } from "../components/GameFilters";
 
-export function GamesPage(props: { currentUser: User | undefined; setCurrentUser: (newPersonData: User) => void; }) {
+export function GamesPage(props: {
+    currentUser: User | undefined;
+    setCurrentUser: (newPersonData: User) => void;
+}) {
     const [error, setError] = useState(false);
     const [games, setGames] = useState<Game[]>([]);
     const [filters, setFilters] = useState<Filters>(new Filters());
-    const [dates, setDates] = useState([]);
-    const [systems, setSystems] = useState([]);
-    const [masters, setMasters] = useState([]);
-    const [selected, setSelected] = useState<string[]>([]);
-    const groupDates = useCheckboxGroup();
-    const groupSystems = useCheckboxGroup();
-    const groupMasters = useCheckboxGroup();
-    const chars = ["date", "system", "master"]
-    let navigate = useNavigate()
-    
+    const [dates, setDates] = useState<string[]>([]);
+    const [systems, setSystems] = useState<string[]>([]);
+    const [masters, setMasters] = useState<string[]>([]);
+    const navigate = useNavigate();
 
-    async function fetchGamesData() {
+    const fetchGamesData = async () => {
         try {
-            const response = await new GamesController().getAllGames(filters)
+            const response = await new GamesController().getAllGames(filters);
             if (response instanceof ErrorResponse) {
                 setError(true);
-            } else  {
-                setGames(response)
+            } else {
+                setGames(response);
             }
-
-        } catch (err) {
+        } catch {
             setError(true);
         }
-    }
+    };
 
-    async function fetchChars() {
+    const fetchChars = async () => {
         try {
-            chars.map(async (char) => {
-                const response = await new GamesController().getGamesByChar(char)
-                if (response instanceof ErrorResponse) {
-                    setError(true);
-                } else  {
-                    if (char == "date"){
-                        setDates(response);
-                    } else if (char == "system"){
-                        setSystems(response);
-                    } else if (char == "master"){
-                        setMasters(response);
-                    }
-                }})
-
-        } catch (err) {
+            const controller = new GamesController();
+            const [d, s, m] = await Promise.all([
+                controller.getGamesByChar("date"),
+                controller.getGamesByChar("system"),
+                controller.getGamesByChar("master"),
+            ]);
+            if (d instanceof ErrorResponse || s instanceof ErrorResponse || m instanceof ErrorResponse) {
+                setError(true);
+            } else {
+                setDates(d);
+                setSystems(s);
+                setMasters(m);
+            }
+        } catch {
             setError(true);
         }
-    }
+    };
 
     useEffect(() => {
         fetchGamesData();
         fetchChars();
     }, []);
-
-    useEffect(() => {
-        filters["date"] = groupDates.value;
-        fetchGamesData();
-    }, [groupDates.value]);
-
-    useEffect(() => {
-        filters["master"] = groupMasters.value;
-        fetchGamesData();
-    }, [groupMasters.value]);
-
-    useEffect(() => {
-        filters["system"] = groupSystems.value;
-        fetchGamesData();
-    }, [groupSystems.value]);
 
     return (
         <Box
@@ -87,126 +72,38 @@ export function GamesPage(props: { currentUser: User | undefined; setCurrentUser
             bgRepeat="no-repeat"
             bgAttachment="fixed"
         >
-        
-            <CheckboxCard.Root maxW="150px" variant="surface"
-                onChange={() => {
-                filters["have_places"] = !filters["have_places"]
-                setFilters(filters)
-                fetchGamesData()}}
-            >
-            <CheckboxCard.HiddenInput />
-            <CheckboxCard.Control>
-                <CheckboxCard.Content>
-                  <CheckboxCard.Label>Eсть места</CheckboxCard.Label>
-                </CheckboxCard.Content>
-                <CheckboxCard.Indicator />
-              </CheckboxCard.Control>
-            </CheckboxCard.Root>
-
-            <Menu.Root>
-              <Menu.Trigger asChild>
-                <Button variant="outline" size="md">
-                   Даты
-                </Button>
-              </Menu.Trigger>
-              <Portal>
-                <Menu.Positioner>
-                  <Menu.Content>
-                    <Menu.ItemGroup>
-                      {dates.map(value => (
-                        <Menu.CheckboxItem
-                          key={value}
-                          value={value}
-                          checked={groupDates.isChecked(value)}
-                          onCheckedChange={() => {
-                              groupDates.toggleValue(value)
-                          }}
-                        >
-                            {value}
-                          <Menu.ItemIndicator />
-                        </Menu.CheckboxItem>
-                      ))}
-                    </Menu.ItemGroup>
-                  </Menu.Content>
-                </Menu.Positioner>
-              </Portal>
-            </Menu.Root>
-
-            <Menu.Root>
-              <Menu.Trigger asChild>
-                <Button variant="outline" size="md">
-                   Системы
-                </Button>
-              </Menu.Trigger>
-              <Portal>
-                <Menu.Positioner>
-                  <Menu.Content>
-                    <Menu.ItemGroup>
-                      {systems.map(value => (
-                        <Menu.CheckboxItem
-                          key={value}
-                          value={value}
-                          checked={groupSystems.isChecked(value)}
-                          onCheckedChange={() => {
-                              groupSystems.toggleValue(value)
-                          }}
-                        >
-                            {value}
-                          <Menu.ItemIndicator />
-                        </Menu.CheckboxItem>
-                      ))}
-                    </Menu.ItemGroup>
-                  </Menu.Content>
-                </Menu.Positioner>
-              </Portal>
-            </Menu.Root>
-
-            <Menu.Root>
-              <Menu.Trigger asChild>
-                <Button variant="outline" size="md">
-                   Мастера
-                </Button>
-              </Menu.Trigger>
-              <Portal>
-                <Menu.Positioner>
-                  <Menu.Content>
-                    <Menu.ItemGroup>
-                      {masters.map(value => (
-                        <Menu.CheckboxItem
-                          key={value}
-                          value={value}
-                          checked={groupMasters.isChecked(value)}
-                          onCheckedChange={() => {
-                              groupMasters.toggleValue(value)
-                          }}
-                        >
-                            {value}
-                          <Menu.ItemIndicator />
-                        </Menu.CheckboxItem>
-                      ))}
-                    </Menu.ItemGroup>
-                  </Menu.Content>
-                </Menu.Positioner>
-              </Portal>
-            </Menu.Root>
-
-            {props.currentUser?.isAdmin && (
-                        <Button colorPalette='orange' asChild mt={4} ml={4}><a href="/createGame">Добавить мероприятие</a></Button>
-                    )}
-
-            <Heading size="7xl" pb={1} color="white">
+            <Heading size="7xl" color="white">
                 Список партий:
             </Heading>
 
+            <GameFilters
+                dates={dates}
+                systems={systems}
+                masters={masters}
+                filters={filters}
+                setFilters={setFilters}
+                fetchGamesData={fetchGamesData}
+            />
+
+            {props.currentUser?.isAdmin && (
+                <Button colorPalette="orange" asChild mt={4} ml={4}>
+                    <a href="/createGame">Добавить мероприятие</a>
+                </Button>
+            )}
 
             {error && <div>Произошла ошибка при загрузке партий.</div>}
 
             {games.length > 0 ? (
                 <Box
                     display="grid"
-                    gridTemplateColumns="repeat(3, 1fr)"
-                    gap={10}
-                    mt={10}
+                    gap={6}
+                    mt={6}
+                    mb={6}
+                    gridTemplateColumns={{
+                        base: "1fr",      // на маленьких экранах — 1 карточка в ряд
+                        sm: "repeat(2, 1fr)", // на средних экранах — 2 карточки
+                        md: "repeat(3, 1fr)", // на больших — 3 карточки
+                    }}
                 >
                     {games.map((game) => (
                         <GameCard
@@ -218,7 +115,9 @@ export function GamesPage(props: { currentUser: User | undefined; setCurrentUser
                 </Box>
             ) : (
                 <Box mt={4}>
-                    <Heading size="md" pb={1} color="white">Партий нет(</Heading>
+                    <Heading size="md" pb={1} color="white">
+                        Партий нет(
+                    </Heading>
                 </Box>
             )}
         </Box>

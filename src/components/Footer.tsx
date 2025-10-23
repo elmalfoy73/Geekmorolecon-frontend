@@ -1,24 +1,38 @@
-import { Stack, HStack, VStack, Link, Image, LinkProps } from '@chakra-ui/react';
+import {Stack, HStack, VStack, Link, Image, LinkProps, Box} from '@chakra-ui/react';
 export function Footer() {
     return (
         <HStack
             maxW="5xl"
             w="100%"
-            p={6}
+            p={2}
             justifyContent="space-between"
             alignItems="center"
             direction={{ base: 'column', md: 'row' }}
         >
+            <Box
+                display="flex"
+                overflowX="auto"
+                maxW={{ base: "100%", md: "none" }}
+                css={{
+                    "&::-webkit-scrollbar": {
+                        display: "none",
+                    },
+                    "-ms-overflow-style": "none", // IE и Edge
+                    "scrollbar-width": "none", // Firefox
+                    WebkitOverflowScrolling: "touch", // плавный скролл на iOS
+                }}
+            >
+
             {/* Левая часть с изображениями */}
-            <HStack>
+            <HStack flexShrink={0}>
                 <Link href="https://vk.com/geekmorolecon?from=groups">
-                    <Image h="50px" src="VK.png"/>
+                    <Image flexShrink={0} h="50px" src="VK.png"/>
                 </Link>
                 <Link href="https://t.me/GEEKMOROLECON">
-                    <Image h="50px" src="Telegram_logo.svg"/>
+                    <Image flexShrink={0} h="50px" src="Telegram_logo.svg"/>
                 </Link>
                 <Link href="https://vk.com/geekmo?from=groups">
-                    <Image h="50px" src="GEEKMO_Logo.png"/>
+                    <Image flexShrink={0} h="50px" src="GEEKMO_Logo.png"/>
                 </Link>
                 <a aria-current="page" href="https://itmo.events/events/114706" className="router-link-active router-link-exact-active">
                     <svg xmlns="http://www.w3.org/2000/svg" width="196" height="24" fill="none">
@@ -29,6 +43,7 @@ export function Footer() {
                     </svg>
                 </a>
             </HStack>
+            </Box>
         </HStack>
     );
 };

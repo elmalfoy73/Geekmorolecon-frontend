@@ -76,7 +76,10 @@ export function SignUpPage(props: { currentUser: User | undefined; setCurrentUse
              bgRepeat="no-repeat"
              bgAttachment="fixed">
             <Center>
-            <Card.Root minW="xl">
+            <Card.Root minW="0"
+                       maxW="xl"
+                       overflow="hidden"
+                       cursor="pointer">
                 <Center>
                     <Card.Header>
                         {!ver &&

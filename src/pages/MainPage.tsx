@@ -39,7 +39,7 @@ export function MainPage(props: { currentUser: User | undefined; setCurrentUser:
                 <Heading size="2xl">{info["description"]}</Heading>
                 </Center>
                 <Center>
-                <Heading size="6xl">{info["date"]} | {info["address"]}</Heading>
+                <Heading size="4xl">{info["date"]} | {info["address"]}</Heading>
                 </Center>
             </div>
         )}
