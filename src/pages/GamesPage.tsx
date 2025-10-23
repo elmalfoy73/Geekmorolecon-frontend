@@ -72,7 +72,7 @@ export function GamesPage(props: {
             bgRepeat="no-repeat"
             bgAttachment="fixed"
         >
-            <Heading size="7xl" color="white">
+            <Heading size="4xl" color="white">
                 Список партий:
             </Heading>
 

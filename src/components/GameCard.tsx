@@ -19,7 +19,7 @@ export function GameCard({ game, onClick }: { game: Game; onClick: () => void })
                 <Center>
 
                 </Center>
-                <Heading mb="2" fontSize = "4xl" style = {{textAlign: "center"}}>«{game.name}»</Heading>
+                <Heading mb="2" fontSize = "4xl" style = {{textAlign: "center"}}>{game.name}</Heading>
                 <Card.Description fontSize="3xl" as="div" textAlign="center">
                     <div>{isRPG && (<b><a href={game.masterLink} target="_blank">{game.master}</a>, <a href={game.masterClubLink} target="_blank">{game.masterClub}</a></b>)}</div>
                     <div><b>Дата:</b> {game.date}</div>
