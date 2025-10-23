@@ -44,7 +44,7 @@ export class GamesController extends BaseController {
     }
 
     async createGame(gameData: FormData) {
-        return await fetch("http://127.0.0.1:5000/api/createSection", {
+        return await fetch("/api/createSection", {
             method: "POST",
             body: gameData,
             headers: {

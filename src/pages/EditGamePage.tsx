@@ -110,7 +110,8 @@ export function EditGamePage(props: { currentUser: User | undefined; setCurrentU
              bgAttachment="fixed">
             <Center>
             {game && (
-                <Card.Root minW="xl">
+                <Card.Root minW="0"
+                           maxW="xl">
                     <Center>
                         <Card.Header>
                             <Card.Title mb="4" fontSize="3xl">Редактирование партии</Card.Title>

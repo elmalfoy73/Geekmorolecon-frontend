@@ -59,7 +59,6 @@ export function Header(props: { currentUser: User | undefined }) {
                             {isLoggedIn ? (
                                 <Button
                                     colorPalette="orange"
-                                    height="50px"
                                     width="125px"
                                     asChild
                                 >

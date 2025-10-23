@@ -179,9 +179,20 @@ export function AccountPage(props: {
             {games.length > 0 && (
                 <div>
                     <Heading size="xl" pb={1} color="white">Мои партии:</Heading>
-                    <Stack gap="4" direction="row">
+                    <Box
+                        display="grid"
+                        gap={6}
+                        mt={6}
+                        mb={6}
+                        gridTemplateColumns={{
+                            base: "1fr",      // на маленьких экранах — 1 карточка в ряд
+                            sm: "repeat(2, 1fr)", // на средних экранах — 2 карточки
+                            md: "repeat(3, 1fr)", // на больших — 3 карточки
+                        }}
+                    >
                         {games.map((game) => (
-                            <Card.Root width="400px" overflow="hidden" onClick={() => navigate(`/game/${game.id}`)}>
+                            <Card.Root minW="0"
+                                       maxW="xl" overflow="hidden" onClick={() => navigate(`/game/${game.id}`)}>
                                 <Card.Body gap="2">
                                     <Image src={game.image}/>
                                     <Card.Title mb="2">{game.system} «{game.name}»</Card.Title>
@@ -195,7 +206,7 @@ export function AccountPage(props: {
                                 </Card.Footer>
                             </Card.Root>
                         ))}
-                    </Stack>
+                    </Box>
                 </div> )}
         </Box>
     );

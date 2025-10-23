@@ -31,15 +31,18 @@ export function MainPage(props: { currentUser: User | undefined; setCurrentUser:
     }, []);
 
     return (
-        <Box px={6} className="page">
+        <Box px={6} className="page"
+             pt={4}
+             pb={4}
+             bgImage="url('/bg.png')"
+             bgSize="cover"
+             bgRepeat="no-repeat"
+             bgAttachment="fixed">
         {info && (
             <div>
-                <Image src='main.png'></Image>
+                <Image src='main_pic.png'></Image>
                 <Center pt={10}>
-                <Heading size="2xl">{info["description"]}</Heading>
-                </Center>
-                <Center>
-                <Heading size="4xl">{info["date"]} | {info["address"]}</Heading>
+                <Heading size="4xl" color="white">{info["description"]}</Heading>
                 </Center>
             </div>
         )}
