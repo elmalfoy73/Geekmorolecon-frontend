@@ -1,6 +1,5 @@
 {
   "name": "geekmo",
-  "proxy": "http://185.26.120.49",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

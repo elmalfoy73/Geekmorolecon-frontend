@@ -22,6 +22,8 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
                 setError("");
             } else {
                 setGame(response);
+                if (!game) return;
+                setJoined(props.currentUser?.sections.includes(game.id) ?? false);
             }
 
         } catch (err) {
@@ -31,11 +33,6 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
 
     useEffect(() => {
         fetchGameData();
-    }, []);
-    useEffect(() => {
-        if (!game) return;
-        console.log(game.id);
-        setJoined(props.currentUser?.sections.includes(game.id) ?? false);
     }, []);
 
     async function deleteGame() {
