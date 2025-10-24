@@ -12,6 +12,7 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
     const [error, setError] = useState("");
     const [game, setGame] = useState<Game>();
     const [joined, setJoined] = useState(false);
+    const [started, setStarted] = useState(false);
     let navigate = useNavigate();
 
     async function fetchGameData() {
@@ -22,8 +23,6 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
                 setError("");
             } else {
                 setGame(response);
-                if (!game) return;
-                setJoined(props.currentUser?.sections.includes(game.id) ?? false);
             }
 
         } catch (err) {
@@ -34,6 +33,12 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
     useEffect(() => {
         fetchGameData();
     }, []);
+
+    useEffect(() => {
+        if (!game || !props.currentUser || started) return;
+        setStarted(true);
+        setJoined(props.currentUser?.sections.includes(game.id) ?? false);
+    }, [game, props.currentUser, started]);
 
     async function deleteGame() {
         if (!id) return;
