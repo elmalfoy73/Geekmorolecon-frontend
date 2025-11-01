@@ -1,8 +1,4 @@
 
-const HOST = "localhost";
-const PORT = "5000";
-
-
 export class ErrorResponse {
     code: number
     text: string
@@ -14,7 +10,7 @@ export class ErrorResponse {
 export class BaseController {
 
 
-    async api<T>(url: string, body: any = null, method: string = "GET", host: string | undefined = HOST, port: string | undefined = PORT): Promise<T | ErrorResponse> {
+    async api<T>(url: string, body: any = null, method: string = "GET"): Promise<T | ErrorResponse> {
         let response = await this.request("/api/" + url, body, method)
         let text = await response.text();
         if (text == ""){
