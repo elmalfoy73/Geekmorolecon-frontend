@@ -35,7 +35,7 @@ export function ActivitiesPage(props: { currentUser: User | undefined; setCurren
             pt={4}
     pb={4}
     px={6}
-    bgImage="url('/bg.png')"
+    bgImage="url('/bg.jpg')"
     bgSize="cover"
     bgRepeat="no-repeat"
     bgAttachment="fixed"

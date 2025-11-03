@@ -93,7 +93,7 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
 
     return (
         <Box pt={40} pb={40} px={6}
-             bgImage="url('/bg.png')"
+             bgImage="url('/bg.jpg')"
              bgSize="cover"
              bgRepeat="no-repeat"
              bgAttachment="fixed">

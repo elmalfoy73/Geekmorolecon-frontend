@@ -34,7 +34,7 @@ export function MainPage(props: { currentUser: User | undefined; setCurrentUser:
         <Box px={6} className="page"
              pt={4}
              pb={4}
-             bgImage="url('/bg.png')"
+             bgImage="url('/bg.jpg')"
              bgSize="cover"
              bgRepeat="no-repeat"
              bgAttachment="fixed">

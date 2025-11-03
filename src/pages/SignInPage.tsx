@@ -45,7 +45,7 @@ export function SignInPage(props: { currentUser: User | undefined; setCurrentUse
 
     return (
         <Box pt={40} pb={40} px={6}
-             bgImage="url('/bg.png')"
+             bgImage="url('/bg.jpg')"
              bgSize="cover"
              bgRepeat="no-repeat"
              bgAttachment="fixed">
