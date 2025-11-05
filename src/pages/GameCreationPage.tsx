@@ -114,7 +114,7 @@ export function GameCreationPage(props: {
                     
                     <Field.Root orientation="horizontal">
                         <Field.Label>Дата</Field.Label>
-                        <Input placeholder="22.10.2025" ref={withMask("99.10.2025")} value={date} onChange={(e) => setDate(e.target.value)}/>
+                        <Input placeholder="22.10.2025" ref={withMask("99.99.9999")} value={date} onChange={(e) => setDate(e.target.value)}/>
                     </Field.Root>
                     
                     <Field.Root orientation="horizontal">
@@ -124,7 +124,7 @@ export function GameCreationPage(props: {
                     
                     <Field.Root orientation="horizontal">
                         <Field.Label>Дата публикации</Field.Label>
-                        <Input placeholder="22.11.2025" ref={withMask("99.10.2025")} value={postDate} onChange={(e) => setPostDate(e.target.value)}/>
+                        <Input placeholder="22.11.2025" ref={withMask("99.99.9999")} value={postDate} onChange={(e) => setPostDate(e.target.value)}/>
                     </Field.Root>
 
                     <Field.Root orientation="horizontal">
