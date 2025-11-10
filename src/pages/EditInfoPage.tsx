@@ -75,7 +75,8 @@ export function EditInfoPage(props: { currentUser: User | undefined; setCurrentU
              bgImage="url('/bg.jpg')"
              bgSize="cover"
              bgRepeat="no-repeat"
-             bgAttachment="fixed">
+             bgAttachment="fixed"
+             minHeight="100vh">
             <Center>
             {info && (
                 <Card.Root minW="0"

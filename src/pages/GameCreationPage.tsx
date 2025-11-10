@@ -95,7 +95,8 @@ export function GameCreationPage(props: {
                          bgImage="url('/bg.jpg')"
                          bgSize="cover"
                          bgRepeat="no-repeat"
-                         bgAttachment="fixed">
+                         bgAttachment="fixed"
+                         minHeight="100vh">
         <Center>
             <Card.Root minW="xl" maxW="xl">
                 <Center>

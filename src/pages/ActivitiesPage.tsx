@@ -39,6 +39,7 @@ export function ActivitiesPage(props: { currentUser: User | undefined; setCurren
     bgSize="cover"
     bgRepeat="no-repeat"
     bgAttachment="fixed"
+    minHeight="100vh"
     >
 
     {props.currentUser?.isAdmin && (

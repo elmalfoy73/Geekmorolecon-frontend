@@ -74,7 +74,8 @@ export function SignUpPage(props: { currentUser: User | undefined; setCurrentUse
              bgImage="url('/bg.jpg')"
              bgSize="cover"
              bgRepeat="no-repeat"
-             bgAttachment="fixed">
+             bgAttachment="fixed"
+             minHeight="100vh">
             <Center>
             <Card.Root minW="0"
                        maxW="xl"

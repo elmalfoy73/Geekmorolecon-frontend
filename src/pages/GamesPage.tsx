@@ -71,6 +71,7 @@ export function GamesPage(props: {
             bgSize="cover"
             bgRepeat="no-repeat"
             bgAttachment="fixed"
+            minHeight="100vh"
         >
             <Heading size="4xl" color="white">
                 Список партий:

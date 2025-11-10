@@ -19,7 +19,7 @@ export function Header(props: { currentUser: User | undefined }) {
             <Stack direction="column">
                 <Box
                     display="flex"
-                    bg={isLoggedIn ? "#363836" : "#FFFFFF"}
+                    bg="#FFFFFF"
                     alignItems="center"
                     justifyContent="space-between"
                     width="100%"

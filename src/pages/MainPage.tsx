@@ -42,7 +42,11 @@ export function MainPage(props: { currentUser: User | undefined; setCurrentUser:
             <div>
                 <Image src='main_pic.png'></Image>
                 <Center pt={10}>
-                <Heading size="4xl" color="white">{info["description"]}</Heading>
+                <Heading size={{
+                    base: "lg",
+                    sm: "xl",
+                    md: "2xl",
+                }} color="white">{info["description"]}</Heading>
                 </Center>
             </div>
         )}

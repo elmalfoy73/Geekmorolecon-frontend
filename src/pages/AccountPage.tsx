@@ -32,6 +32,7 @@ export function AccountPage(props: {
     let [show, setShow] = useState(false)
     let navigate = useNavigate()
     const [games, setGames] = useState<Game[]>([]);
+    const [activities, setActivities] = useState<Game[]>([]);
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
@@ -79,6 +80,20 @@ export function AccountPage(props: {
         }
     }
 
+    async function fetchActivitiesData() {
+        try {
+            const response = await new UserController().getUserGames()
+            if (response instanceof ErrorResponse) {
+                setError(true);
+            } else  {
+                setGames(response)
+            }
+
+        } catch (err) {
+            setError(true);
+        }
+    }
+
     async function handlePasswordChange() {
         if (password !== confirmPassword) {
             setPasswordMismatch(true);
@@ -105,7 +120,8 @@ export function AccountPage(props: {
              bgSize="cover"
              bgRepeat="no-repeat"
              bgAttachment="fixed"
-             position="relative">
+             position="relative"
+             minHeight="100vh">
             <Center>
                 <Box>
                     <Image h="200px" src="dragon.png"/>
@@ -176,6 +192,38 @@ export function AccountPage(props: {
                     
                 </Box>
             </Center>
+            {games.length > 0 && (
+                <div>
+                    <Heading size="xl" pb={1} color="white">Мои партии:</Heading>
+                    <Box
+                        display="grid"
+                        gap={6}
+                        mt={6}
+                        mb={6}
+                        gridTemplateColumns={{
+                            base: "1fr",      // на маленьких экранах — 1 карточка в ряд
+                            sm: "repeat(2, 1fr)", // на средних экранах — 2 карточки
+                            md: "repeat(3, 1fr)", // на больших — 3 карточки
+                        }}
+                    >
+                        {games.map((game) => (
+                            <Card.Root minW="0"
+                                       maxW="xl" overflow="hidden" onClick={() => navigate(`/game/${game.id}`)}>
+                                <Card.Body gap="2">
+                                    <Image src={game.image}/>
+                                    <Card.Title mb="2">{game.system} «{game.name}»</Card.Title>
+                                    <Card.Description>
+                                        <div>{game.master}, {game.masterClub}</div>
+                                        <div>Дата: {game.date}</div>
+                                        <div>Время: {game.time}</div>
+                                    </Card.Description>
+                                </Card.Body>
+                                <Card.Footer justifyContent="flex-end">
+                                </Card.Footer>
+                            </Card.Root>
+                        ))}
+                    </Box>
+                </div> )}
             {games.length > 0 && (
                 <div>
                     <Heading size="xl" pb={1} color="white">Мои партии:</Heading>

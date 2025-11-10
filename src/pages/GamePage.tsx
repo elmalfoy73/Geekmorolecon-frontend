@@ -96,7 +96,8 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
              bgImage="url('/bg.jpg')"
              bgSize="cover"
              bgRepeat="no-repeat"
-             bgAttachment="fixed">
+             bgAttachment="fixed"
+             minHeight="100vh">
             <Center>
             {game && (
                 <div>
