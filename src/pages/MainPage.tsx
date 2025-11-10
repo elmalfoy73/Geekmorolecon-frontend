@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {Heading, Box, Image, Center, Button} from "@chakra-ui/react";
+import {Heading, Box, Image, Center, Button, Text} from "@chakra-ui/react";
 import {InfoController} from "../controllers/InfoController"
 import {ErrorResponse} from "../controllers/BaseController";
 import {User} from "../model/user/User";
@@ -42,11 +42,11 @@ export function MainPage(props: { currentUser: User | undefined; setCurrentUser:
             <div>
                 <Image src='main_pic.png'></Image>
                 <Center pt={10}>
-                <Heading size={{
+                <Text textStyle={{
                     base: "lg",
                     sm: "xl",
                     md: "2xl",
-                }} color="white">{info["description"]}</Heading>
+                }} whiteSpace="pre-wrap" color="white">{info["description"]}</Text>
                 </Center>
             </div>
         )}
