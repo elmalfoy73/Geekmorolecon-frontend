@@ -57,7 +57,7 @@ export class Game {
         this.name = name;
         this.users = users;
         this.date = date;
-        this.postDate = date;
+        this.postDate = postDate;
         this.image = image;
         this.master = master;
         this.masterClub = masterClub;
@@ -66,7 +66,7 @@ export class Game {
         this.places = places;
         this.system = system;
         this.time = time;
-        this.postTime = time;
+        this.postTime = postTime;
         this.type = type;
     }
 }

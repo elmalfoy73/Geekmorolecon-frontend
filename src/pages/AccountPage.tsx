@@ -21,6 +21,7 @@ import {GamesController} from "../controllers/GamesController";
 import {Game} from "../model/Game";
 import {PasswordInput} from "../components/ui/password-input";
 import {SignUpRequest} from "../model/user/auth/SignUpRequest";
+import {sha256} from "js-sha256";
 
 
 export function AccountPage(props: {
@@ -103,7 +104,7 @@ export function AccountPage(props: {
         }
 
         try {
-            const response = await new UserController().changeUserPassword(password);
+            const response = await new UserController().changeUserPassword(sha256(password));
             if (response instanceof ErrorResponse) {
                 setError(true);
             } else {

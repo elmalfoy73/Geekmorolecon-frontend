@@ -92,6 +92,7 @@ export function EditGamePage(props: { currentUser: User | undefined; setCurrentU
             postTime,
             game.type
         );
+        console.log(updatedGame);
 
         const response = await new GamesController().updateGame(updatedGame);
         if (response instanceof ErrorResponse) {

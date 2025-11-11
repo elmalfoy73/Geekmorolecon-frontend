@@ -4,7 +4,7 @@ import {GamesController} from "../controllers/GamesController";
 import {ErrorResponse} from "../controllers/BaseController";
 import React, {useEffect, useState} from "react";
 import {Game} from "../model/Game";
-import {Badge, Box, Button, Card, Center, Heading, Image, List, Stack} from "@chakra-ui/react";
+import {Badge, Box, Button, Card, Center, Heading, Image, List, Stack, Text} from "@chakra-ui/react";
 import {UserController} from "../controllers/UserController";
 
 export function GamePage(props: { currentUser: User | undefined; setCurrentUser: (newPersonData: User) => void; }) {
@@ -114,18 +114,27 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
                                 <div><a href={game.masterLink} target="_blank">{game.master}</a>, <a href={game.masterClubLink} target="_blank">{game.masterClub}</a></div> }
                                 <div>Дата: {game.date}</div>
                                 <div>Время: {game.time}</div>
-                                <div>{game.description}</div>
+                                <div>
+                                    <Text whiteSpace="pre-wrap">
+                                        {game.description}
+                                    </Text>
+                                </div>
+
                                 <div>{game.places} мест, свободно: {game.counter}</div>
-                                <div>Записаны: </div>
-                                <List.Root px={4}>
-                                    {game.users.map((user)=>(
-                                        <List.Item key={user.name}>
-                                            {user.name}
-                                            {props.currentUser?.isMaster && ("Контакт:"+user.contact+"    ")}
-                                            {props.currentUser?.isAdmin && (
-                                            <Button onClick={() => new UserController().deleteFromGame(game.id, user.name)} color="red">Удалить</Button>)}
-                                        </List.Item>))}
-                                </List.Root>
+                                {(game.type === "Партия" || props.currentUser?.isAdmin) &&
+                                    <>
+                                        <div>Записаны: </div>
+                                        <List.Root px={4}>
+                                        {game.users.map((user)=>(
+                                            <List.Item key={user.name}>
+                                                {user.name}
+                                                {props.currentUser?.isMaster && ("Контакт:"+user.contact+"    ")}
+                                                {props.currentUser?.isAdmin && (
+                                                <Button onClick={() => new UserController().deleteFromGame(game.id, user.name)} color="red">Удалить</Button>)}
+                                            </List.Item>))}
+                                        </List.Root>
+                                    </>
+                                }
                             </Card.Description>
                                 <>
                                     {error && <span className="errorMessage" style={{color: "red"}}>
