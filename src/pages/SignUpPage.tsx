@@ -128,9 +128,7 @@ export function SignUpPage(props: { currentUser: User | undefined; setCurrentUse
                             </div>}
                             <Switch.Root checked={sogl}
                                          onCheckedChange={(e: any) => setSogl(e.checked)}>
-                                <Switch.Label>Даю согласие на обработку своих персональных данных в соответствии с
-                                    в соответствии с
-                                    Федеральным законом от 27.07.2006 №152-ФЗ "О персональных данных"</Switch.Label>
+                                <Switch.Label>Даю согласие на обработку своих персональных данных в соответствии с Федеральным законом от 27.07.2006 №152-ФЗ "О персональных данных"</Switch.Label>
                                 <Switch.HiddenInput/>
                                 <Switch.Control/>
                             </Switch.Root>

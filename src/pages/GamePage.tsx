@@ -56,15 +56,15 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
         }
     }
 
-    async function joinGame(id : string) {
+    async function joinGame(id: string) {
         try {
             const response = await new GamesController().joinGame(id)
             console.log(response)
             if (response instanceof ErrorResponse) {
                 setError("");
-            } else if(response == "Cross"){
+            } else if (response == "Cross") {
                 setError("Вы не можете записаться на эту партию, так как в таком случае в вашем расписании партий образутся пересечение!")
-            } else{
+            } else {
                 setJoined(true);
                 fetchGameData();
             }
@@ -74,12 +74,12 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
         }
     }
 
-    async function leaveGame(id : string) {
+    async function leaveGame(id: string) {
         try {
             const response = await new GamesController().leaveGame(id)
             if (response instanceof ErrorResponse) {
                 setError("");
-            } else{
+            } else {
                 setJoined(false);
                 fetchGameData();
             }
@@ -90,7 +90,6 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
     }
 
 
-
     return (
         <Box pt={40} pb={40} px={6}
              bgImage="url('/bg.jpg')"
@@ -99,80 +98,91 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
              bgAttachment="fixed"
              minHeight="100vh">
             <Center>
-            {game && (
-                <div>
-                    <Card.Root maxW="xl" overflow="hidden">
-                        <Image src={game.image}/>
-                        <Card.Body gap="2" as="div">
-                            {game.type === "Партия" ? (
-                                <Card.Title mb="2">{game.system} «{game.name}»</Card.Title>
-                            ) : (
-                                <Card.Title mb="2">{game.name}</Card.Title>
-                            )}
-                            <Card.Description as="div">
-                                {game.type === "Партия" &&
-                                <div><a href={game.masterLink} target="_blank">{game.master}</a>, <a href={game.masterClubLink} target="_blank">{game.masterClub}</a></div> }
-                                <div>Дата: {game.date}</div>
-                                <div>Время: {game.time}</div>
-                                <div>
-                                    <Text whiteSpace="pre-wrap">
-                                        {game.description}
-                                    </Text>
-                                </div>
-
-                                <div>{game.places} мест, свободно: {game.counter}</div>
-                                {(game.type === "Партия" || props.currentUser?.isAdmin) &&
-                                    <>
-                                        <div>Записаны: </div>
-                                        <List.Root px={4}>
-                                        {game.users.map((user)=>(
-                                            <List.Item key={user.name}>
-                                                {user.name}
-                                                {props.currentUser?.isMaster && ("Контакт:"+user.contact+"    ")}
-                                                {props.currentUser?.isAdmin && (
-                                                <Button onClick={() => new UserController().deleteFromGame(game.id, user.name)} color="red">Удалить</Button>)}
-                                            </List.Item>))}
-                                        </List.Root>
-                                    </>
-                                }
-                            </Card.Description>
+                {game && (
+                    <div>
+                        <Card.Root maxW="xl" overflow="hidden">
+                            <Image src={game.image}/>
+                            <Card.Body gap="2" as="div">
+                                {game.type === "Партия" ? (
+                                    <Card.Title mb="2">{game.system} «{game.name}»</Card.Title>
+                                ) : (
+                                    <Card.Title mb="2">{game.name}</Card.Title>
+                                )}
+                                <Card.Description mb={1}>
+                                        <div>{game.type === "Партия" && (
+                                            <b><a href={game.masterLink} target="_blank">{game.master}</a>, <a
+                                                href={game.masterClubLink}
+                                                target="_blank">{game.masterClub}</a></b>)}</div>
+                                        <div>Дата: <b>{game.date}</b></div>
+                                        <div>Время: <b> {game.time}</b></div>
+                                </Card.Description>
+                                <Card.Description>
+                                    <div>
+                                        <Text whiteSpace="pre-wrap">
+                                            {game.description}
+                                        </Text>
+                                    </div>
+                                </Card.Description>
+                                <Card.Description>
+                                    <div><b>{game.places}</b> мест, свободно: <b>{game.counter}</b></div>
+                                    {(game.type === "Партия" || props.currentUser?.isAdmin) &&
+                                        <>
+                                            <div>Записаны:</div>
+                                            <List.Root px={4}>
+                                                {game.users.map((user) => (
+                                                    <List.Item key={user.name}>
+                                                        {user.name}
+                                                        {props.currentUser?.isMaster && ("Контакт:" + user.contact + "    ")}
+                                                        {props.currentUser?.isAdmin && (
+                                                            <Button
+                                                                onClick={() => new UserController().deleteFromGame(game.id, user.name)}
+                                                                color="red">Удалить</Button>)}
+                                                    </List.Item>))}
+                                            </List.Root>
+                                        </>
+                                    }
+                                </Card.Description>
                                 <>
                                     {error && <span className="errorMessage" style={{color: "red"}}>
                                         {error}
                                     </span>}
                                 </>
-                        </Card.Body>
+                            </Card.Body>
 
-                        <Card.Footer justifyContent="flex-end" as="div">
-                        <Stack>
-                            {game.counter > 0 ? (
-                                props.currentUser ? (
-                                    joined ? (
-                                    <Button onClick={() => leaveGame(game.id)}>Отписаться</Button>
-                                ) : (
-                                    <Button onClick={() =>joinGame(game.id)}>Записаться</Button>
-                                )
-                                ) : (
-                                <Button onClick={() => navigate("/signIn")} size="md">Войдите в аккаунт для записи</Button>)
-                            ) : (
-                                <Badge colorPalette="red" size="md">Мест нет</Badge>
-                            )}
-                            {props.currentUser?.isAdmin && (
-                                <div>
-                                <Button colorPalette='orange' onClick={() => navigate(`/editGame/${game.id}`)}>Редактировать партию</Button>
-                                <Button colorPalette='orange' onClick={() => deleteGame()}>Удалить партию</Button>
-                                </div>
-                            )}
-                        </Stack>
-                        
-                        </Card.Footer>
-                    </Card.Root>
-                </div>
-            )}
-                </Center>
+                            <Card.Footer justifyContent="flex-end" as="div">
+                                <Stack>
+                                    {game.counter > 0 ? (
+                                        props.currentUser ? (
+                                            joined ? (
+                                                <Button onClick={() => leaveGame(game.id)}>Отписаться</Button>
+                                            ) : (
+                                                <Button onClick={() => joinGame(game.id)}>Записаться</Button>
+                                            )
+                                        ) : (
+                                            <Button onClick={() => navigate("/signIn")} size="md">Войдите в аккаунт для
+                                                записи</Button>)
+                                    ) : (
+                                        <Badge colorPalette="red" size="md">Мест нет</Badge>
+                                    )}
+                                    {props.currentUser?.isAdmin && (
+                                        <div>
+                                            <Button colorPalette='orange'
+                                                    onClick={() => navigate(`/editGame/${game.id}`)}>Редактировать
+                                                партию</Button>
+                                            <Button colorPalette='orange' onClick={() => deleteGame()}>Удалить
+                                                партию</Button>
+                                        </div>
+                                    )}
+                                </Stack>
+
+                            </Card.Footer>
+                        </Card.Root>
+                    </div>
+                )}
+            </Center>
         </Box>
-)
-    ;
+    )
+        ;
 }
 
 
