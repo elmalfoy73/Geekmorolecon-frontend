@@ -155,7 +155,18 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
                                 ) : (
                                 <Button onClick={() => navigate("/signIn")} size="md">Войдите в аккаунт для записи</Button>)
                             ) : (
-                                <Badge colorPalette="red" size="md">Мест нет</Badge>
+                                props.currentUser ? (
+                                    joined ? (
+                                    <div>
+                                        <Button onClick={() => leaveGame(game.id)}>Отписаться</Button>
+                                        <Badge colorPalette="red" size="md">Мест нет</Badge>
+                                    </div>
+                                    ) : (
+                                        <Badge colorPalette="red" size="md">Мест нет</Badge>
+                                    ) 
+                                ) : (
+                                    <Badge colorPalette="red" size="md">Мест нет</Badge>
+                                )
                             )}
                             {props.currentUser?.isAdmin && (
                                 <div>
