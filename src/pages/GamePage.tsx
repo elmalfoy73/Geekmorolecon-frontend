@@ -149,7 +149,6 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
                                 </>
                             </Card.Body>
 
-<<<<<<< HEAD
                         <Card.Footer justifyContent="flex-end" as="div">
                         <Stack>
                             {game.counter > 0 ? (
@@ -188,39 +187,6 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
                 </div>
             )}
                 </Center>
-=======
-                            <Card.Footer justifyContent="flex-end" as="div">
-                                <Stack>
-                                    {game.counter > 0 ? (
-                                        props.currentUser ? (
-                                            joined ? (
-                                                <Button onClick={() => leaveGame(game.id)}>Отписаться</Button>
-                                            ) : (
-                                                <Button onClick={() => joinGame(game.id)}>Записаться</Button>
-                                            )
-                                        ) : (
-                                            <Button onClick={() => navigate("/signIn")} size="md">Войдите в аккаунт для
-                                                записи</Button>)
-                                    ) : (
-                                        <Badge colorPalette="red" size="md">Мест нет</Badge>
-                                    )}
-                                    {props.currentUser?.isAdmin && (
-                                        <div>
-                                            <Button colorPalette='orange'
-                                                    onClick={() => navigate(`/editGame/${game.id}`)}>Редактировать
-                                                партию</Button>
-                                            <Button colorPalette='orange' onClick={() => deleteGame()}>Удалить
-                                                партию</Button>
-                                        </div>
-                                    )}
-                                </Stack>
-
-                            </Card.Footer>
-                        </Card.Root>
-                    </div>
-                )}
-            </Center>
->>>>>>> refs/remotes/origin/main
         </Box>
     )
         ;
