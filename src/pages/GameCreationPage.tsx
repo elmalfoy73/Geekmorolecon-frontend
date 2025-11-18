@@ -35,6 +35,8 @@ export function GameCreationPage(props: {
     const [counter, setCounter] = useState(places)
     const [system, setSystem] = useState("")
     const [time, setTime] = useState("")
+    const [endTime, setEndTime] = useState("")
+    const [room, setRoom] = useState("")
     const [isGame, setIsGame] = useState(false)
     const [postDate, setPostDate] = useState("")
     const [postTime, setPostTime] = useState("")
@@ -51,6 +53,8 @@ export function GameCreationPage(props: {
         formData.append("time", time);
         formData.append("postDate", postDate);
         formData.append("postTime", postTime);
+        formData.append("room", room);
+        formData.append("endTime", endTime);
 
         if(isGame) {
             formData.append("type", "Партия");
@@ -119,8 +123,18 @@ export function GameCreationPage(props: {
                     </Field.Root>
                     
                     <Field.Root orientation="horizontal">
-                        <Field.Label>Время</Field.Label>
+                        <Field.Label>Время начала</Field.Label>
                         <Input placeholder="15:20" ref={withMask("99:99")} value={time} onChange={(e) => setTime(e.target.value)}/>
+                    </Field.Root>
+
+                    <Field.Root orientation="horizontal">
+                        <Field.Label>Время конца</Field.Label>
+                        <Input placeholder="15:20" ref={withMask("99:99")} value={endTime} onChange={(e) => setEndTime(e.target.value)}/>
+                    </Field.Root>
+
+                    <Field.Root orientation="horizontal">
+                        <Field.Label>Аудитория</Field.Label>
+                        <Input value={room} onChange={(e) => setRoom(e.target.value)}/>
                     </Field.Root>
                     
                     <Field.Root orientation="horizontal">

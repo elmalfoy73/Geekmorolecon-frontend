@@ -29,6 +29,8 @@ export class Game {
     system: string;
     time: string;
     postTime: string;
+    endTime: string;
+    room: string;
     users: UserCont[];
     type: string;
 
@@ -49,7 +51,9 @@ export class Game {
         system: string,
         time: string,
         postTime: string,
-        type: string
+        type: string,
+        endTime: string,
+        room: string
 ) {
         this.id = id;
         this.counter = counter;
@@ -67,6 +71,8 @@ export class Game {
         this.system = system;
         this.time = time;
         this.postTime = postTime;
+        this.endTime = endTime;
+        this.room = room;
         this.type = type;
     }
 }

@@ -2,9 +2,11 @@ import {BaseController} from "./BaseController";
 import {Game, Filters} from "../model/Game";
 
 export class GamesController extends BaseController {
-    async getAllGames(filters: Filters | undefined) {
+    async getAllGames(filters: Filters | undefined, isAdmin: boolean | undefined = false) {
         let url = "games";
-        return await this.api<Game[]>(url, {filters}, "POST")
+        let body = {"filters": filters, "isAdmin": isAdmin};
+        console.log(body);
+        return await this.api<Game[]>(url, body, "POST")
     }
 
     async getAllActivities() {

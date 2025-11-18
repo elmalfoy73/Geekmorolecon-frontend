@@ -26,7 +26,7 @@ export function GamesPage(props: {
 
     const fetchGamesData = async () => {
         try {
-            const response = await new GamesController().getAllGames(filters);
+            const response = await new GamesController().getAllGames(filters, props.currentUser?.isAdmin);
             if (response instanceof ErrorResponse) {
                 setError(true);
             } else {
@@ -61,6 +61,9 @@ export function GamesPage(props: {
         fetchGamesData();
         fetchChars();
     }, []);
+    useEffect(() => {
+        fetchGamesData();
+    }, [props.currentUser]);
 
     return (
         <Box

@@ -31,6 +31,8 @@ export function EditGamePage(props: { currentUser: User | undefined; setCurrentU
     const [places, setPlaces] = useState(0);
     const [system, setSystem] = useState("");
     const [time, setTime] = useState("");
+    const [endTime, setEndTime] = useState("");
+    const [room, setRoom] = useState("");
     const [postDate, setPostDate] = useState("");
     const [postTime, setPostTime] = useState("");
 
@@ -63,10 +65,12 @@ export function EditGamePage(props: { currentUser: User | undefined; setCurrentU
             setPostTime(game.postTime);
             setMaster(game.master);
             setMasterClub(game.masterClub);
-            setMasterLink(game.master);
-            setMasterClubLink(game.masterClub);
+            setMasterLink(game.masterLink);
+            setMasterClubLink(game.masterClubLink);
             setPlaces(game.places);
             setDescription(game.description);
+            setEndTime(game.endTime);
+            setRoom(game.room);
         }
     }, [game]);
 
@@ -90,7 +94,9 @@ export function EditGamePage(props: { currentUser: User | undefined; setCurrentU
             system,
             time,
             postTime,
-            game.type
+            game.type,
+            endTime,
+            room
         );
         console.log(updatedGame);
 
@@ -136,6 +142,14 @@ export function EditGamePage(props: { currentUser: User | undefined; setCurrentU
                             <Field.Root orientation="horizontal">
                                 <Field.Label>Время</Field.Label>
                                 <Input value={time} onChange={(e) => setTime(e.target.value)}/>
+                            </Field.Root>
+                            <Field.Root orientation="horizontal">
+                                <Field.Label>Время конца</Field.Label>
+                                <Input value={endTime} onChange={(e) => setEndTime(e.target.value)}/>
+                            </Field.Root>
+                            <Field.Root orientation="horizontal">
+                                <Field.Label>Аудитория</Field.Label>
+                                <Input value={room} onChange={(e) => setRoom(e.target.value)}/>
                             </Field.Root>
                             <Field.Root orientation="horizontal">
                                 <Field.Label>Дата публикации</Field.Label>

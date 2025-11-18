@@ -19,12 +19,14 @@ export function SignUpPage(props: { currentUser: User | undefined; setCurrentUse
     const [enterCode, setEnterCode] = useState("");
     const [ver, setVer] = useState(false);
     const [sogl, setSogl] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [contact, setContact] = useState("");
     let navigate = useNavigate();
     let [error, setError] = useState<string | null>(null);
     let [passwordMismatch, setPasswordMismatch] = useState(false);
 
     async function handleForm() {
+        setLoading(true);
 
         if (password !== confirmPassword) {
             setPasswordMismatch(true);
@@ -32,10 +34,10 @@ export function SignUpPage(props: { currentUser: User | undefined; setCurrentUse
         } else {
             setPasswordMismatch(false);
         }
-
         let signUpRequest = new SignUpRequest(email, sha256(password), name, contact);
 
         let response = await new AuthController().signUp(signUpRequest);
+        setLoading(false);
         if (response instanceof ErrorResponse) {
             console.log(response.text);
         } else {
@@ -137,7 +139,7 @@ export function SignUpPage(props: { currentUser: User | undefined; setCurrentUse
                     </Card.Body>}
                     <Card.Footer justifyContent="flex-end">
                         {!ver &&
-                            <Button colorScheme="orange" disabled={!sogl} onClick={handleForm} mt={4}>Зарегистрироваться</Button>
+                            <Button colorScheme="orange" disabled={!sogl && loading && !contact} onClick={handleForm} mt={4}>Зарегистрироваться</Button>
                         }
                         {ver && <div>
                             <Field.Root orientation="horizontal">

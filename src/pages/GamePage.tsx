@@ -114,7 +114,8 @@ export function GamePage(props: { currentUser: User | undefined; setCurrentUser:
                                                 href={game.masterClubLink}
                                                 target="_blank">{game.masterClub}</a></b>)}</div>
                                         <div>Дата: <b>{game.date}</b></div>
-                                        <div>Время: <b> {game.time}</b></div>
+                                        <div>Время: <b> {game.time} - {game.endTime}</b></div>
+                                        <div>Аудитория: <b> {game.room}</b></div>
                                 </Card.Description>
                                 <Card.Description>
                                     <div>
