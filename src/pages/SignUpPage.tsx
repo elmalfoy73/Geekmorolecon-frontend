@@ -139,7 +139,7 @@ export function SignUpPage(props: { currentUser: User | undefined; setCurrentUse
                     </Card.Body>}
                     <Card.Footer justifyContent="flex-end">
                         {!ver &&
-                            <Button colorScheme="orange" disabled={!sogl && loading && !contact} onClick={handleForm} mt={4}>Зарегистрироваться</Button>
+                            <Button colorScheme="orange" disabled={!sogl || loading || !contact} onClick={handleForm} mt={4}>Зарегистрироваться</Button>
                         }
                         {ver && <div>
                             <Field.Root orientation="horizontal">
